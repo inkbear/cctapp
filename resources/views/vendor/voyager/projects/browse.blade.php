@@ -5,7 +5,7 @@
 @section('page_header')
     <div class="container-fluid">
         <h1 class="page-title">
-            <i class="{{ $dataType->icon }}"></i> {{-- $dataType->getTranslatedAttribute('display_name_plural') --}}CCT App Users
+            <i class="{{ $dataType->icon }}"></i> {{ $dataType->getTranslatedAttribute('display_name_plural') }}
         </h1>
         @can('add', app($dataType->model_name))
             <a href="{{ route('voyager.'.$dataType->slug.'.create') }}" class="btn btn-success btn-add-new">
@@ -37,7 +37,6 @@
 @stop
 
 @section('content')
-    @php $showCheckboxColumn = FALSE; @endphp
     <div class="page-content browse container-fluid">
         @include('voyager::alerts')
         <div class="row">
@@ -108,16 +107,50 @@
                                 <tbody>
                                     @foreach($dataTypeContent as $data)
 
-                                    <!-- Only show users with roles lower than the logged in user -->
-                                    @php 
-                                    $MyRoleRank = \Auth::user()->role->rank;
-                                    $role_data = DB::table('roles')->select('roles.rank as rank')->where('id', '=', $data->role_id)->first();
-                                    @endphp
-                                    @if($role_data->rank > $MyRoleRank)
-                                
+                                    <?php 
+                                        $showRow = 0;
+                                        $allows = App\Project::find($data->id)->isProjectTeam($currentUser->id)->get();
+                                        // $allows = $allows->toArray();    
+                                        // print_r($allows );
+                                    ?>
+                                    @if(isset($allows))
+                                        @foreach ($allows as $allow)
+                                            @if(isset($allow['id']))
+                                                <?php $showRow = 1; ?>
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                    <!-- Check if the current user is included in the PI or Team fields -->
+                                    @if($currentUser->id == $data->pi_id || $currentUser->hasRole('admin') || $currentUser->hasRole('owner') || isset($allow[0]->exists) )
+                                        <?php    
+                                            $showRow = 1;
+                                        ?>
+                                    @endif
+
+
+                                    @if(property_exists($row->details, 'relationship'))
+
+                                        @foreach($data->{$row->field} as $item)
+                                            {{ $item->{$row->field} }}
+                                        @endforeach
+
+                                        @elseif(property_exists($row->details, 'options'))
+                                        @if (!empty(json_decode($data->{$row->field})))
+                                            @foreach(json_decode($data->{$row->field}) as $item)
+                                                @if (@$row->details->options->{$item})
+                                                <!-- OUTPUT -->
+                                                    {{ $row->details->options->{$item} . (!$loop->last ? ', ' : '') }}
+                                                @endif
+                                            @endforeach
+                                        @else
+                                            {{ __('voyager::generic.none') }}
+                                        @endif
+                                    @endif
+
+                                    @if($showRow == 1)
                                     <tr>
                                         @if($showCheckboxColumn)
-                                            <td>                                       
+                                            <td>
                                                 <input type="checkbox" name="row_id" id="checkbox_{{ $data->getKey() }}" value="{{ $data->getKey() }}">
                                             </td>
                                         @endif
@@ -126,6 +159,7 @@
                                             if ($data->{$row->field.'_browse'}) {
                                                 $data->{$row->field} = $data->{$row->field.'_browse'};
                                             }
+                                            
                                             @endphp
                                             <td>
                                                 @if (isset($row->details->view))
@@ -268,6 +302,11 @@
                                         </td>
                                     </tr>
                                     @endif
+
+
+
+
+
                                     @endforeach
                                 </tbody>
                             </table>
