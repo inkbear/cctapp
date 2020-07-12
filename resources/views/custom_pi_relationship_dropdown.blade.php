@@ -1,7 +1,7 @@
 @if(isset($options->model) && isset($options->type))
 
     @if(class_exists($options->model))
-
+        
         @php $relationshipField = $row->field; @endphp
 
         @if($options->type == 'belongsTo')
@@ -21,8 +21,9 @@
                 @endif
 
             @else
-
-                @if($currentUser->hasRole('admin') || $currentUser->hasRole('owner'))
+                
+                <!-- This is the custom bit to change the pi_id field rendering according to role -->
+                @if($currentUser->hasRole('admin') || $currentUser->hasRole('owner') || $options->column != 'pi_id' )
                 <!-- Regular select menu -->
                 <select
                     class="form-control select2-ajax" name="{{ $options->column }}"
@@ -53,32 +54,12 @@
                     @endforeach
                 </select>
                 
-                @elseif(Auth::user()->hasRole('pi')  && $view == 'add')
-                <!-- Populate the field with pi ID when adding -->
-                <select
-                    class="form-control select2-ajax" name="{{ $options->column }}"
-                    data-get-items-route="{{route('voyager.' . $dataType->slug.'.relation')}}"
-                    data-get-items-field="{{$row->field}}"
-                    @if(!is_null($dataTypeContent->getKey())) data-id="{{$dataTypeContent->getKey()}}" @endif
-                    data-method="{{ !is_null($dataTypeContent->getKey()) ? 'edit' : 'add' }}"
-                >
-                    @php
-
-                        $model = app($options->model);                    
-                        $query = $model::where($options->key, old($options->column, $dataTypeContent->{$options->column}))->get();
-                        $query->where('id', Auth::user()->id);
-                    @endphp
-
-                    @foreach($query as $relationshipData)
-                        <option value="{{ $relationshipData->{$options->key} }}" 
-                        @if(old($options->column, $dataTypeContent->{$options->column}) == $relationshipData->{$options->key}) 
-                        selected="selected" 
-                        @endif>
-                        {{ $relationshipData->{$options->label} }} 
-                        </option>
-                    @endforeach
-                </select>
-
+                @elseif(Auth::user()->hasRole('pi')  && $view == 'add' )
+                <!-- Populate the field with pi_id when adding -->
+                    <input type="hidden" class="form-control" id="{{ $options->column }}" name="{{ $options->column }}" 
+                    value="{{ $currentUser->id }}">
+                    <ul><li>{{ $currentUser->name }}</li></ul>
+                    @elseif(Auth::user()->hasRole('pi')  && $view == 'add' )
                 @else
                     <!-- show value as read only for pi when browsing and collab -->                    
                     @php
@@ -90,11 +71,11 @@
 
                     @foreach($query as $relationshipData)
                         @if(old($options->column, $dataTypeContent->{$options->column}) == $relationshipData->{$options->key})
-                            is {{ $relationshipData->{$options->label} }}
+                            <ul><li> {{ $relationshipData->{$options->label} }} </li></ul>
                         @endif
                     @endforeach
-                @endif 
-            @endif
+                @endif            
+           @endif
 
         @elseif($options->type == 'hasOne')
 
