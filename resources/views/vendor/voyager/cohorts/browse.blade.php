@@ -107,35 +107,6 @@
                                 <tbody>
                                     @foreach($dataTypeContent as $data)
 
-                                    <?php 
-                                        $showRow = 0; // 1 = disabled logic 0 = use logic
-                                        $teamAllows = App\Project::find($data->id)->isProjectTeam($currentUser->id)->get();
-                                        $collaboratorAllows = App\Project::find($data->id)->isProjectCollaborator($currentUser->id)->get();
-                                    ?>
-                                    <!-- Check if the current user listed as a team member for this project -->
-                                    @if(isset($teamAllows))
-                                        @foreach ($teamAllows as $teamAllow)
-                                            @if(isset($teamAllow['id']))
-                                                <?php $showRow = 1; ?>
-                                            @endif
-                                        @endforeach
-                                    @endif
-                                    <!-- Check if the current user listed as a collaborator for this project -->
-                                    @if(isset($collaboratorAllows))
-                                        @foreach ($collaboratorAllows as $collaboratorAllow)
-                                            @if(isset($collaboratorAllow['id']))
-                                                <?php $showRow = 1; ?>
-                                            @endif
-                                        @endforeach
-                                    @endif
-                                    <!-- Check if the current user is the PI for the project or an admin or the site owner -->
-                                    @if($currentUser->id == $data->pi_id || $currentUser->hasRole('admin') || $currentUser->hasRole('owner') || isset($allow[0]->exists) )
-                                        <?php    
-                                            $showRow = 1;
-                                        ?>
-                                    @endif
-
-
                                     @if(property_exists($row->details, 'relationship'))
 
                                         @foreach($data->{$row->field} as $item)
@@ -155,7 +126,7 @@
                                         @endif
                                     @endif
 
-                                    @if($showRow == 1)
+                                    @can('rowAccessCohort', $data)
                                     <tr>
                                         @if($showCheckboxColumn)
                                             <td>
@@ -309,11 +280,7 @@
                                             @endforeach
                                         </td>
                                     </tr>
-                                    @endif
-
-
-
-
+                                    @endcan
 
                                     @endforeach
                                 </tbody>

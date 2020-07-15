@@ -25,7 +25,7 @@ class ProjectPolicy
 
     public function before($user, $ability)
     {
-        // These folks get to skip over the rest of the poicy
+        // These folks get to skip over the rest of the policy
         if ( $user->hasRole('admin')  || $user->hasRole('owner') ) {
             return true;
         }
@@ -72,7 +72,17 @@ class ProjectPolicy
         if( $project->pi_id == $user->id ){
             return true;
         }
-        return false;
+       // Check the user assignments
+       $results = DB::select( DB::raw("SELECT * FROM project_user WHERE user_id = '$user->id' AND project_id = '$project->id'") );
+        if(count($results) > 0){
+           $allow = true;
+        }
+        // Check the collaborator assignments
+        $results = DB::select( DB::raw("SELECT * FROM project_collaborator WHERE user_id = '$user->id' AND project_id = '$project->id'") );
+        if(count($results) > 0){
+            $allow = true;
+        }
+        return $allow;
     }
 
     public function rowAccess(User $user, Project $project){
@@ -95,6 +105,7 @@ class ProjectPolicy
     }
 
     public function piOnlyFieldAccess(User $user, Project $project){
+        
         // Edit access is already filtered - see above
         $allow = false;
         // Determine if the user has read only or read/write for the project fields.
@@ -104,4 +115,19 @@ class ProjectPolicy
         return $allow;
     }
 
+    public function piAndCollabOnlyFieldAccess(User $user, Project $project){
+        
+        // Edit access is already filtered - see above
+        $allow = false;
+        // Determine if the user has read only or read/write for the project fields.
+        if( $project->pi_id == $user->id ){
+            $allow = true;
+        }
+        // Check the collaborator assignments
+        $results = DB::select( DB::raw("SELECT * FROM project_collaborator WHERE user_id = '$user->id' AND project_id = '$project->id'") );
+        if(count($results) > 0){
+            $allow = true;
+        }
+        return $allow;
+    }
 }

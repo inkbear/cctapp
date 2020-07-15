@@ -1,15 +1,9 @@
-        @php 
-                $readonly = ''; 
-                $roaccess = false;
-        @endphp
-        @if( isset($view) && $view == 'edit')
-                @cannot('piOnlyFieldAccess', $dataTypeContent)
-                        @php 
-                                $readonly = 'readonly'; 
-                                $roaccess = true; 
-                        @endphp
-                @endcan  
-        @endif
+
+        @can('piOnlyFieldAccess', $dataTypeContent)
+                @php $readonly = ''; @endphp
+        @else
+                @php $readonly = 'readonly'; @endphp
+        @endcan  
 
         @if( isset($view) && ($view == 'edit' || $view == 'add') && $row->type == 'text')
                 <!-- Text  -->
@@ -21,35 +15,36 @@
                 value="{{ old($row->field, $dataTypeContent->{$row->field} ?? $options->default ?? '') }}"
                 {{ $readonly }}>       
 
-        @elseif(isset($view) && ($view == 'edit' || $view == 'add') && $row->type == 'text_area')                 
+        @elseif(isset($view) && ($view == 'edit' && $row->type == 'text_area'))                   
                 <!-- Text Area -->
                 <textarea @if($row->required == 1) required @endif class="form-control" name="{{ $row->field }}" rows="{{ $options->display->rows ?? 5 }}" {{ $readonly }}>{{ old($row->field, $dataTypeContent->{$row->field} ?? $options->default ?? '') }}</textarea>
         
-        @elseif(isset($view) && ($view == 'edit' || $view == 'add') && $row->type == 'date')                  
+        @elseif(isset($view) && ($view == 'edit' && $row->type == 'date'))                   
                 <!-- Date -->
                 <input type="date" class="form-control" name="{{ $row->field }}"
                 placeholder="{{ $row->getTranslatedAttribute('display_name') }}"
                 value="@if(isset($dataTypeContent->{$row->field})){{ \Carbon\Carbon::parse(old($row->field, $dataTypeContent->{$row->field}))->format('Y-m-d') }}@else{{old($row->field)}}@endif"
                 {{ $readonly }}>
         
-        @elseif( $row->type == 'relationship') 
-
-                @if($options->pivot_table == 'project_collaborator' || $options->pivot_table == 'cct_project') 
-                        @php $project_collaborator_FieldAccess = false; @endphp
-                        @can('piOnlyFieldAccess', $dataTypeContent)
-                                @php $project_collaborator_FieldAccess = true; @endphp
-                        @endcan
-                @endif
+        @elseif($row->type == 'relationship') 
 
                 @if(class_exists($options->model))
 
                         @php 
                                 $relationshipField = $row->field; 
+
+                                $roaccess = true;
                         @endphp
+
+                        @can('piOnlyFieldAccess', $dataTypeContent)
+                                @php 
+                                        $roaccess = false; 
+                                @endphp
+                        @endcan
 
                         @if($options->type == 'belongsTo')
 
-                                @if(isset($view) && ($view == 'browse' || $view == 'read') )
+                                @if((isset($view) && ($view == 'browse' || $view == 'read'  )) || $roaccess)
 
                                         @php
                                         $relationshipData = (isset($data)) ? $data : $dataTypeContent;
@@ -113,7 +108,7 @@
 
                         @elseif($options->type == 'hasMany')
 
-                                @if(isset($view) && ($view == 'browse' || $view == 'read') )
+                                @if((isset($view) && ($view == 'browse' || $view == 'read'  )) || $roaccess)
 
                                         @php
                                                 $relationshipData = (isset($data)) ? $data : $dataTypeContent;
@@ -168,20 +163,16 @@
 
                         @elseif($options->type == 'belongsToMany')
 
-                                @if( 
-                                        (isset($view) && ($view == 'browse' || $view == 'read' ))  ||  
-                                        (isset($view) && ($view == 'edit' && $options->table == 'projects' )) ||
-                                        (isset($view) && ($view == 'edit' && $options->pivot_table == 'project_collaborator' && !$project_collaborator_FieldAccess)) ||
-                                        (isset($view) && ($view == 'edit' && $options->pivot_table == 'cct_project' && !$project_collaborator_FieldAccess))            
-                                )       
-                                        @php     
+                                @if((isset($view) && ($view == 'browse' || $view == 'read'  )) || $roaccess)
+                        
+                                        @php
                                                 $relationshipData = (isset($data)) ? $data : $dataTypeContent;
 
                                                 $selected_values = isset($relationshipData) ? $relationshipData->belongsToMany($options->model, $options->pivot_table, $options->foreign_pivot_key ?? null, $options->related_pivot_key ?? null, $options->parent_key ?? null, $options->key)->get()->map(function ($item, $key) use ($options) {
                                                                 return $item->{$options->label};
                                                         })->all() : array();
                                         @endphp
-                                        
+
                                         @if(isset($view) && $view == 'browse')
                                                 @php
                                                         $string_values = implode(", ", $selected_values);
