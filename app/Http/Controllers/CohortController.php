@@ -78,37 +78,45 @@ class CohortController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControll
                     }
                 } else {
                     $total_count = $model->count();
-       
-
-                    // HOW TO KNOW WHAT IS BEING ASKED BY WHAT PAGE
 
 
-                    //Log::info('relationshipOptions: ' . $relationshipOptions);
-                    // This is just a list users - argh
-                    $sample = $model->take($on_page)->skip($skip)->get();
-                    //Log::info($sample);
 
-                    
 
-                    if($request->input('type') == 'participant_belongstomany_project_relationship' && (Auth::user()->role != 'admin' || Auth::user()->role != 'owner' )){
-                        Log::info('Apple');
-                        $relationshipOptions = $model->take($on_page)->skip($skip)->where('pi_id', Auth::user()->id)->get();
+                    if($request->input('type') == 'cohort_belongstomany_project_relationship' ){
+                        
+                        // CUSTOM SECTION START ===============================                     
+                        if(Auth::user()->role->name == 'admin' || Auth::user()->role->name == 'owner' ){
+                            // THE ORIGINAL DB CALL for admin and owner roles
+                           $relationshipOptions = $model->take($on_page)->skip($skip)->get();
+                        
+                        }else{   
+                            $user_id = Auth::user()->id;
+                            // This gets the list of projects owned by the PI                        
+                            $a = DB::table('projects')
+                                ->select('projects.*')
+                                ->where('pi_id', '=', $user_id);
+
+                            // This gets the list of projects the user is assigend to as a collaborator
+                            $b = DB::table('projects')
+                                ->select('projects.*')
+                                ->join('project_collaborator', 'projects.id', '=', 'project_collaborator.project_id' )
+                                ->where('project_collaborator.user_id', '=', $user_id);
+
+                            // This gets the list of projects the user is assigend to as a staff
+                            $relationshipOptions = DB::table('projects')
+                                ->select('projects.*')
+                                ->join('project_user', 'projects.id', '=', 'project_user.project_id' )
+                                ->where('project_user.user_id', '=', $user_id)  
+                                ->union($a)
+                                ->union($b)
+                                ->get();
+  
+                        }
+
                     }else{
-                        Log::info('Banana');
                         $relationshipOptions = $model->take($on_page)->skip($skip)->get();
                     }
-
-
-                    Log::info('dataType: ' . $dataType);
-                    
-                    
-                    
-                    // Log::info('relationshipOptions: ' . $relationshipOptions);
-
-
-
-
-
+                    // CUSTOM SECTION END =============================== 
 
                 }
 

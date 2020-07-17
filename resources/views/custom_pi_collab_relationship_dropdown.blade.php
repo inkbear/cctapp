@@ -24,7 +24,7 @@
                 
                 <!-- This is the custom bit to change the pi_id field rendering according to role -->
                 
-                @if($currentUser->hasRole('admin') || $currentUser->hasRole('owner') || $options->column != 'pi_id' )
+                @if($currentUser->hasRole('admin') || $currentUser->hasRole('owner') )
                 <!-- Regular select menu -->
                 <select
                     class="form-control select2-ajax" name="{{ $options->column }}"
@@ -55,14 +55,38 @@
                     @endforeach
                 </select>
                 
-                @elseif(Auth::user()->hasRole('pi')  && $view == 'add' )
-                <!-- Populate the field with pi_id when adding -->
+                @elseif($view == 'add' )
+                <!-- Populate the field with user_id when adding -->
                     <input type="hidden" class="form-control" id="{{ $options->column }}" name="{{ $options->column }}" 
                     value="{{ $currentUser->id }}">
                     <ul><li>{{ $currentUser->name }}</li></ul>
-                    @elseif(Auth::user()->hasRole('pi')  && $view == 'add' )
+                
+                
+                @elseif($view == 'edit' )
+                @php Log::info('Bananarama: ' . $dataTypeContent); @endphp
+                <input type="hidden" class="form-control" id="{{ $options->column }}" name="{{ $options->column }}" 
+                    value="{{ $dataTypeContent->owner_id }}" readonly>
+
+
+                @php
+                $model = app($options->model);                    
+                $query = $model::where($options->key, old($options->column, $dataTypeContent->{$options->column}))->get();
+                       
+                foreach($query as $relationshipData){
+                    if(old($options->column, $dataTypeContent->{$options->column}) == $relationshipData->{$options->key}) {
+                        $owner_name = $relationshipData->{$options->label}; 
+                    }
+                } 
+                @endphp
+            
+                <input type="text" class="form-control" id="display_only" name="display_only" 
+                    value="{{ $owner_name }}" readonly>
+
+
+
+
                 @else
-                    <!-- show value as read only for pi when browsing and collab -->                    
+                    <!-- show value as read only for pi and collab when browsing or viewing -->                    
                     @php
                     
                     $model = app($options->model);                    

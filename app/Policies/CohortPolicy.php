@@ -114,6 +114,14 @@ class CohortPolicy
         return $allow;
     }
 
+    public function ownsCohort(User $user, Cohort $cohort){
+        $allow = false;
+        // Determine if the user cowns this cohort
+        if( $cohort->owner_id == $user->id ){
+            $allow = true;
+        }
+    }
+
     public function rowAccessCohort(User $user, Cohort $cohort){
         $allow = false;
         // Determine if the user can see this cohort based on role and/or assignment

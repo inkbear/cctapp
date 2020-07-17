@@ -106,6 +106,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach($dataTypeContent as $data)
+                                    
 
                                     @if(property_exists($row->details, 'relationship'))
 
@@ -138,7 +139,6 @@
                                             if ($data->{$row->field.'_browse'}) {
                                                 $data->{$row->field} = $data->{$row->field.'_browse'};
                                             }
-                                            
                                             @endphp
                                             <td>
                                                 @if (isset($row->details->view))
@@ -281,7 +281,6 @@
                                         </td>
                                     </tr>
                                     @endcan
-
                                     @endforeach
                                 </tbody>
                             </table>
