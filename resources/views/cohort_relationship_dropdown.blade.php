@@ -63,7 +63,6 @@
                 
                 
                 @elseif($view == 'edit' )
-                @php Log::info('Bananarama: ' . $dataTypeContent); @endphp
                 <input type="hidden" class="form-control" id="{{ $options->column }}" name="{{ $options->column }}" 
                     value="{{ $dataTypeContent->owner_id }}" readonly>
 
