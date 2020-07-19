@@ -59,14 +59,14 @@
                     <input type="hidden" class="form-control" id="{{ $options->column }}" name="{{ $options->column }}" 
                     value="{{ $currentUser->id }}">
                     <ul><li>{{ $currentUser->name }}</li></ul>
-                    @elseif(Auth::user()->hasRole('pi')  && $view == 'add' )
-                @else
-                    <!-- show value as read only for pi when browsing and collab -->                    
-                    @php
-                    
+                @elseif($view == 'edit' )
+                    <!-- show value as read only for edit by non-admin -->  
+                    <input type="hidden" class="form-control" id="{{ $options->column }}" name="{{ $options->column }}" 
+                    value="{{ $dataTypeContent->pi_id }}" readonly>
+                                          
+                    @php                    
                     $model = app($options->model);                    
                     $query = $model::where($options->key, old($options->column, $dataTypeContent->{$options->column}))->get();
-
                     @endphp
 
                     @foreach($query as $relationshipData)

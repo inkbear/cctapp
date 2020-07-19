@@ -22,8 +22,8 @@
 
             @else
                 
-                <!-- This is the custom bit to change the owner_id field rendering according to role -->
-                @if($currentUser->hasRole('admin') || $currentUser->hasRole('owner') || $options->column != 'owner_id' )
+                <!-- This is the custom bit to change the created_by field rendering according to role -->
+                @if($currentUser->hasRole('admin') || $currentUser->hasRole('owner'))
                 <!-- Regular select menu -->
                 <select
                     class="form-control select2-ajax" name="{{ $options->column }}"
@@ -54,14 +54,13 @@
                     @endforeach
                 </select>
                 
-                @elseif(Auth::user()->hasRole('pi')  && $view == 'add' )
-                <!-- Populate the field with owner_id when adding -->
+                @elseif($view == 'add')
+                <!-- Populate the field with current user ID when adding-->
                     <input type="hidden" class="form-control" id="{{ $options->column }}" name="{{ $options->column }}" 
                     value="{{ $currentUser->id }}">
                     <ul><li>{{ $currentUser->name }}</li></ul>
-                    @elseif(Auth::user()->hasRole('pi')  && $view == 'add' )
-                @else
-                    <!-- show value as read only for pi when browsing and collab -->                    
+                @elseif($view == 'edit')
+                    <!-- show and hold value in EDIT mode for non-admin and non-owner-->                    
                     @php
                     
                     $model = app($options->model);                    
@@ -71,6 +70,9 @@
 
                     @foreach($query as $relationshipData)
                         @if(old($options->column, $dataTypeContent->{$options->column}) == $relationshipData->{$options->key})
+                            
+                            <input type="hidden" class="form-control" id="{{ $options->column }}" name="{{ $options->column }}" 
+                            value="{{ $relationshipData->{$options->key} }}">
                             <ul><li> {{ $relationshipData->{$options->label} }} </li></ul>
                         @endif
                     @endforeach
