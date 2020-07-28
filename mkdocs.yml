@@ -1,0 +1,13 @@
+site_name: CCT App Documentation
+nav:
+    - Home: index.md
+    - General Usage: usage.md
+    - Role Based Guides:
+      - Admin: guide_admin.md
+      - Owner: guide_owner.md
+      - PI: guide_pi.md
+      - Collaborator: guide_collaborator.md
+      - Staff: guide_staff.md
+    - Running Experiments: experiments.md
+    - Developer Notes: developer_notes.md
+theme: readthedocs
