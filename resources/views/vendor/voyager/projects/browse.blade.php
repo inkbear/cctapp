@@ -273,6 +273,12 @@
                                             </td>
                                         @endforeach
                                         <td class="no-sort no-click bread-actions">
+
+                                            <!-- Add in the Generate Experiment button -->
+                                            <a href="/admin/linkbuilder?project_id={{ $data->id }}" title="Generate" class="btn btn-sm btn-success pull-right edit">
+                                                <i class="voyager-lab"></i> <span class="hidden-xs hidden-sm">Make Links</span>
+                                            </a>
+                                            
                                             @foreach($actions as $action)
                                                 @if (!method_exists($action, 'massAction'))
                                                     @include('voyager::bread.partials.actions', ['action' => $action])
