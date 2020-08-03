@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 31, 2020 at 03:44 AM
+-- Generation Time: Aug 03, 2020 at 05:14 AM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.2
 
@@ -103,8 +103,8 @@ CREATE TABLE `ccts` (
 --
 
 INSERT INTO `ccts` (`id`, `name`, `version`, `language`, `tag`, `note`, `created_at`, `updated_at`, `deleted_at`, `asset_path`) VALUES
-(1, 'English V1', 1, 'English', 'Base Model', 'This is the very first version in English', '2020-06-16 12:48:00', '2020-07-27 09:37:43', NULL, 'storage/cct/en/v1'),
-(2, 'Spanish 1.2', 1, 'Spanish', NULL, 'Version 1 of the Spanish CCT', '2020-06-28 13:33:00', '2020-07-06 04:34:52', NULL, NULL),
+(1, 'English V1', 1, 'English', 'Base Model', 'This is the very first version in English', '2020-06-16 12:48:00', '2020-08-02 23:43:23', NULL, 'storage/cct/english/v1'),
+(2, 'Spanish 1.2', 1, 'Spanish', NULL, 'Version 1 of the Spanish CCT', '2020-06-28 13:33:00', '2020-08-02 23:43:43', NULL, 'storage/cct/spanish/v1'),
 (3, 'No Access', 0, 'English', 'Test', 'Test with no access - unassigned', '2020-07-15 03:51:00', '2020-07-22 08:48:08', NULL, NULL);
 
 -- --------------------------------------------------------
@@ -140,18 +140,33 @@ CREATE TABLE `cct_collection_data` (
 
 CREATE TABLE `cct_collection_meta` (
   `id` int(10) UNSIGNED NOT NULL,
-  `collection_id` int(11) DEFAULT NULL,
-  `participant_id` int(11) DEFAULT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `project_id` int(6) DEFAULT NULL,
+  `project_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `project_pi_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `experiment_id` int(6) DEFAULT NULL,
+  `experiment_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `note` text COLLATE utf8mb4_unicode_ci,
   `cct_id` int(11) DEFAULT NULL,
   `cct_version` int(11) DEFAULT NULL,
   `cct_language` int(11) DEFAULT NULL,
-  `link` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `data_csv` text COLLATE utf8mb4_unicode_ci,
-  `is_live` int(11) DEFAULT NULL,
+  `cct_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cohort_id` int(6) DEFAULT NULL,
+  `cohort_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `participant_id` int(11) DEFAULT NULL,
+  `test_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `data_raw` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `cct_collection_meta`
+--
+
+INSERT INTO `cct_collection_meta` (`id`, `token`, `project_id`, `project_name`, `project_pi_id`, `experiment_id`, `experiment_name`, `note`, `cct_id`, `cct_version`, `cct_language`, `cct_name`, `cohort_id`, `cohort_name`, `participant_id`, `test_type`, `data_raw`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(20, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '[{\"rt\":931.5550000173971,\"stimulus\":\"Welcome to the CCT App. Press any key to begin. \",\"key_press\":32,\"trial_part\":\"welcome\",\"trial_type\":\"html-keyboard-response\",\"trial_index\":0,\"time_elapsed\":935,\"internal_node_id\":\"0.0-0.0\",\"token\":\"f7b938a0dd2c665e0933222007c68f91\",\"project_id\":\"4\",\"project_name\":\"Hungarian Wave 2\",\"project_pi_id\":\"2\",\"experiment_id\":\"18\",\"experiment_name\":\"Hungarian Wave 2 : 202082-181545\",\"note\":\"\",\"cct_id\":\"1\",\"cct_version\":\"1\",\"cct_language\":\"English\",\"cct_name\":\"English V1\",\"cohort_id\":\"2\",\"cohort_name\":\"English Monolinguals\",\"participant_id\":\"1\",\"participant_identifier\":\"800\",\"participant_alias\":\"sdsu_en_w1_800\"},{\"rt\":1240.6349999946542,\"stimulus\":\"storage/cct/english/v1/touch_horse.mp3\",\"button_pressed\":\"1\",\"trial_part\":\"test\",\"target\":\"horse\",\"distractor\":\"cow\",\"trial_type\":\"audio-button-response\",\"trial_index\":1,\"time_elapsed\":2177,\"internal_node_id\":\"0.0-1.0-0.0\",\"token\":\"f7b938a0dd2c665e0933222007c68f91\",\"project_id\":\"4\",\"project_name\":\"Hungarian Wave 2\",\"project_pi_id\":\"2\",\"experiment_id\":\"18\",\"experiment_name\":\"Hungarian Wave 2 : 202082-181545\",\"note\":\"\",\"cct_id\":\"1\",\"cct_version\":\"1\",\"cct_language\":\"English\",\"cct_name\":\"English V1\",\"cohort_id\":\"2\",\"cohort_name\":\"English Monolinguals\",\"participant_id\":\"1\",\"participant_identifier\":\"800\",\"participant_alias\":\"sdsu_en_w1_800\",\"correct\":false},{\"rt\":null,\"stimulus\":\"\",\"key_press\":null,\"trial_part\":\"blank_interval\",\"trial_type\":\"html-keyboard-response\",\"trial_index\":2,\"time_elapsed\":3180,\"internal_node_id\":\"0.0-1.0-2.0\",\"token\":\"f7b938a0dd2c665e0933222007c68f91\",\"project_id\":\"4\",\"project_name\":\"Hungarian Wave 2\",\"project_pi_id\":\"2\",\"experiment_id\":\"18\",\"experiment_name\":\"Hungarian Wave 2 : 202082-181545\",\"note\":\"\",\"cct_id\":\"1\",\"cct_version\":\"1\",\"cct_language\":\"English\",\"cct_name\":\"English V1\",\"cohort_id\":\"2\",\"cohort_name\":\"English Monolinguals\",\"participant_id\":\"1\",\"participant_identifier\":\"800\",\"participant_alias\":\"sdsu_en_w1_800\"},{\"rt\":449.8850000090897,\"stimulus\":\"storage/cct/english/v1/touch_cat.mp3\",\"button_pressed\":\"1\",\"trial_part\":\"test\",\"target\":\"cat\",\"distractor\":\"dog\",\"trial_type\":\"audio-button-response\",\"trial_index\":3,\"time_elapsed\":3631,\"internal_node_id\":\"0.0-1.0-0.1\",\"token\":\"f7b938a0dd2c665e0933222007c68f91\",\"project_id\":\"4\",\"project_name\":\"Hungarian Wave 2\",\"project_pi_id\":\"2\",\"experiment_id\":\"18\",\"experiment_name\":\"Hungarian Wave 2 : 202082-181545\",\"note\":\"\",\"cct_id\":\"1\",\"cct_version\":\"1\",\"cct_language\":\"English\",\"cct_name\":\"English V1\",\"cohort_id\":\"2\",\"cohort_name\":\"English Monolinguals\",\"participant_id\":\"1\",\"participant_identifier\":\"800\",\"participant_alias\":\"sdsu_en_w1_800\",\"correct\":false},{\"rt\":null,\"stimulus\":\"\",\"key_press\":null,\"trial_part\":\"blank_interval\",\"trial_type\":\"html-keyboard-response\",\"trial_index\":4,\"time_elapsed\":4631,\"internal_node_id\":\"0.0-1.0-2.1\",\"token\":\"f7b938a0dd2c665e0933222007c68f91\",\"project_id\":\"4\",\"project_name\":\"Hungarian Wave 2\",\"project_pi_id\":\"2\",\"experiment_id\":\"18\",\"experiment_name\":\"Hungarian Wave 2 : 202082-181545\",\"note\":\"\",\"cct_id\":\"1\",\"cct_version\":\"1\",\"cct_language\":\"English\",\"cct_name\":\"English V1\",\"cohort_id\":\"2\",\"cohort_name\":\"English Monolinguals\",\"participant_id\":\"1\",\"participant_identifier\":\"800\",\"participant_alias\":\"sdsu_en_w1_800\"},{\"rt\":416.8749999953434,\"stimulus\":\"storage/cct/english/v1/touch_banana.mp3\",\"button_pressed\":\"1\",\"trial_part\":\"test\",\"target\":\"banana\",\"distractor\":\"book\",\"trial_type\":\"audio-button-response\",\"trial_index\":5,\"time_elapsed\":5049,\"internal_node_id\":\"0.0-1.0-0.2\",\"token\":\"f7b938a0dd2c665e0933222007c68f91\",\"project_id\":\"4\",\"project_name\":\"Hungarian Wave 2\",\"project_pi_id\":\"2\",\"experiment_id\":\"18\",\"experiment_name\":\"Hungarian Wave 2 : 202082-181545\",\"note\":\"\",\"cct_id\":\"1\",\"cct_version\":\"1\",\"cct_language\":\"English\",\"cct_name\":\"English V1\",\"cohort_id\":\"2\",\"cohort_name\":\"English Monolinguals\",\"participant_id\":\"1\",\"participant_identifier\":\"800\",\"participant_alias\":\"sdsu_en_w1_800\",\"correct\":false},{\"rt\":null,\"stimulus\":\"\",\"key_press\":null,\"trial_part\":\"blank_interval\",\"trial_type\":\"html-keyboard-response\",\"trial_index\":6,\"time_elapsed\":6055,\"internal_node_id\":\"0.0-1.0-2.2\",\"token\":\"f7b938a0dd2c665e0933222007c68f91\",\"project_id\":\"4\",\"project_name\":\"Hungarian Wave 2\",\"project_pi_id\":\"2\",\"experiment_id\":\"18\",\"experiment_name\":\"Hungarian Wave 2 : 202082-181545\",\"note\":\"\",\"cct_id\":\"1\",\"cct_version\":\"1\",\"cct_language\":\"English\",\"cct_name\":\"English V1\",\"cohort_id\":\"2\",\"cohort_name\":\"English Monolinguals\",\"participant_id\":\"1\",\"participant_identifier\":\"800\",\"participant_alias\":\"sdsu_en_w1_800\"},{\"rt\":288.0800000275485,\"stimulus\":\"Please exit through the gift shop. Press any key to continue. \",\"key_press\":32,\"trial_part\":\"exit\",\"trial_type\":\"html-keyboard-response\",\"trial_index\":7,\"time_elapsed\":6344,\"internal_node_id\":\"0.0-2.0\",\"token\":\"f7b938a0dd2c665e0933222007c68f91\",\"project_id\":\"4\",\"project_name\":\"Hungarian Wave 2\",\"project_pi_id\":\"2\",\"experiment_id\":\"18\",\"experiment_name\":\"Hungarian Wave 2 : 202082-181545\",\"note\":\"\",\"cct_id\":\"1\",\"cct_version\":\"1\",\"cct_language\":\"English\",\"cct_name\":\"English V1\",\"cohort_id\":\"2\",\"cohort_name\":\"English Monolinguals\",\"participant_id\":\"1\",\"participant_identifier\":\"800\",\"participant_alias\":\"sdsu_en_w1_800\"}]', '2020-08-02 19:54:07', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -402,22 +417,53 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (157, 8, 'participant_belongsto_user_relationship', 'relationship', 'Added By', 0, 1, 1, 1, 1, 1, '{\"view\":\"participant_user_relationship_dropdown\",\"model\":\"App\\\\User\",\"table\":\"users\",\"type\":\"belongsTo\",\"column\":\"added_by\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"blog_posts\",\"pivot\":\"0\",\"taggable\":\"0\"}', 8),
 (162, 7, 'asset_path', 'text', 'Asset Path', 0, 0, 1, 1, 1, 1, '{}', 5),
 (179, 25, 'id', 'text', 'Id', 1, 0, 0, 0, 0, 0, '{}', 1),
-(180, 25, 'project_id', 'text', 'Project Id', 1, 1, 1, 1, 1, 1, '{}', 7),
-(181, 25, 'note', 'text_area', 'Note', 0, 1, 1, 1, 1, 1, '{}', 3),
-(183, 25, 'created_by', 'hidden', 'Created By', 1, 0, 0, 1, 1, 0, '{\"view\":\"hidden_current_user_id\"}', 13),
-(184, 25, 'active', 'checkbox', 'Active', 0, 1, 1, 1, 1, 1, '{}', 4),
-(185, 25, 'created_at', 'timestamp', 'Created At', 0, 0, 0, 0, 0, 0, '{}', 14),
-(186, 25, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 15),
-(187, 25, 'deleted_at', 'timestamp', 'Deleted At', 0, 0, 0, 0, 0, 0, '{}', 16),
-(189, 25, 'name', 'text', 'Name', 1, 1, 1, 1, 1, 1, '{}', 2),
-(190, 25, 'project_name', 'text', 'Project Name', 1, 1, 1, 1, 1, 1, '{}', 5),
-(191, 25, 'project_pi_id', 'text', 'Project Pi Id', 1, 1, 1, 1, 1, 1, '{}', 6),
-(192, 25, 'cct_id', 'text', 'Cct Id', 1, 1, 1, 1, 1, 1, '{}', 8),
-(193, 25, 'cct_name', 'text', 'Cct Name', 1, 1, 1, 1, 1, 1, '{}', 9),
-(194, 25, 'cct_asset_path', 'text', 'Cct Asset Path', 1, 1, 1, 1, 1, 1, '{}', 10),
-(195, 25, 'cohort_id', 'text', 'Cohort Id', 1, 1, 1, 1, 1, 1, '{}', 11),
-(196, 25, 'cohort_name', 'text', 'Cohort Name', 1, 1, 1, 1, 1, 1, '{}', 12),
-(197, 25, 'experiment_token', 'text', 'Experiment Token', 1, 1, 1, 1, 1, 1, '{}', 2);
+(180, 25, 'project_id', 'text', 'Project Id', 1, 0, 0, 0, 0, 0, '{}', 8),
+(181, 25, 'note', 'text_area', 'Note', 0, 0, 1, 1, 0, 1, '{}', 4),
+(183, 25, 'created_by', 'hidden', 'Created By', 1, 0, 0, 0, 0, 0, '{\"view\":\"hidden_current_user_id\"}', 16),
+(184, 25, 'active', 'checkbox', 'Active', 0, 1, 1, 1, 0, 1, '{}', 5),
+(185, 25, 'created_at', 'timestamp', 'Created At', 0, 0, 0, 0, 0, 0, '{}', 17),
+(186, 25, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 18),
+(187, 25, 'deleted_at', 'timestamp', 'Deleted At', 0, 0, 0, 0, 0, 0, '{}', 19),
+(189, 25, 'name', 'text', 'Name', 1, 1, 1, 0, 0, 1, '{}', 2),
+(190, 25, 'project_name', 'text', 'Project Name', 1, 1, 1, 0, 0, 1, '{}', 6),
+(191, 25, 'project_pi_id', 'text', 'Project Pi Id', 1, 0, 0, 0, 0, 0, '{}', 7),
+(192, 25, 'cct_id', 'text', 'Cct Id', 1, 0, 0, 0, 0, 0, '{}', 9),
+(193, 25, 'cct_name', 'text', 'Cct Name', 1, 1, 1, 0, 0, 1, '{}', 10),
+(194, 25, 'cct_asset_path', 'text', 'Cct Asset Path', 1, 0, 1, 0, 0, 1, '{}', 13),
+(195, 25, 'cohort_id', 'text', 'Cohort Id', 1, 0, 0, 0, 0, 0, '{}', 14),
+(196, 25, 'cohort_name', 'text', 'Cohort Name', 1, 1, 1, 0, 0, 1, '{}', 15),
+(197, 25, 'experiment_token', 'text', 'Experiment Token', 1, 0, 0, 0, 0, 0, '{}', 3),
+(198, 26, 'id', 'text', 'Id', 1, 0, 0, 0, 0, 0, '{}', 1),
+(199, 26, 'experiment_id', 'text', 'Experiment Id', 0, 0, 1, 1, 1, 1, '{}', 2),
+(200, 26, 'participant_id', 'text', 'Participant Id', 0, 0, 1, 1, 1, 1, '{}', 3),
+(201, 26, 'token', 'text', 'Token', 0, 1, 1, 1, 1, 1, '{}', 4),
+(202, 26, 'link', 'text', 'Link', 0, 1, 1, 1, 1, 1, '{}', 5),
+(203, 26, 'active', 'text', 'Active', 0, 1, 1, 1, 1, 1, '{}', 6),
+(204, 26, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 1, 0, 1, '{}', 7),
+(205, 26, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 8),
+(206, 26, 'deleted_at', 'timestamp', 'Deleted At', 0, 1, 1, 1, 1, 1, '{}', 9),
+(207, 25, 'cct_version', 'text', 'Cct Version', 1, 0, 1, 0, 0, 1, '{}', 11),
+(208, 25, 'cct_language', 'text', 'Cct Language', 1, 0, 1, 0, 0, 1, '{}', 12),
+(209, 28, 'id', 'text', 'Id', 1, 0, 0, 0, 0, 0, '{}', 1),
+(210, 28, 'token', 'text', 'Token', 0, 0, 1, 0, 0, 0, '{}', 2),
+(211, 28, 'project_id', 'text', 'Project Id', 0, 0, 1, 0, 0, 0, '{}', 3),
+(212, 28, 'project_name', 'text', 'Project Name', 0, 1, 1, 0, 0, 0, '{}', 4),
+(213, 28, 'project_pi_id', 'text', 'Project Pi Id', 0, 0, 1, 0, 0, 0, '{}', 5),
+(214, 28, 'experiment_id', 'text', 'Experiment Id', 0, 0, 1, 0, 0, 0, '{}', 6),
+(215, 28, 'experiment_name', 'text', 'Experiment Name', 0, 1, 1, 0, 0, 0, '{}', 7),
+(216, 28, 'note', 'text', 'Note', 0, 0, 1, 0, 0, 0, '{}', 8),
+(217, 28, 'cct_id', 'text', 'Cct Id', 0, 0, 1, 0, 0, 0, '{}', 9),
+(218, 28, 'cct_version', 'text', 'Cct Version', 0, 0, 1, 0, 0, 0, '{}', 10),
+(219, 28, 'cct_language', 'text', 'Cct Language', 0, 0, 1, 0, 0, 0, '{}', 11),
+(220, 28, 'cct_name', 'text', 'Cct Name', 0, 1, 1, 0, 0, 0, '{}', 12),
+(221, 28, 'cohort_id', 'text', 'Cohort Id', 0, 0, 0, 0, 0, 0, '{}', 13),
+(222, 28, 'cohort_name', 'text', 'Cohort Name', 0, 1, 1, 0, 0, 0, '{}', 14),
+(223, 28, 'participant_id', 'text', 'Participant Id', 0, 0, 1, 0, 0, 0, '{}', 15),
+(224, 28, 'test_type', 'text', 'Test Type', 0, 0, 1, 0, 0, 0, '{}', 16),
+(225, 28, 'data_raw', 'text', 'Data Raw', 0, 0, 1, 0, 0, 0, '{}', 17),
+(226, 28, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 0, 0, 0, '{}', 18),
+(227, 28, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 19),
+(228, 28, 'deleted_at', 'timestamp', 'Deleted At', 0, 0, 0, 0, 0, 0, '{}', 20);
 
 -- --------------------------------------------------------
 
@@ -459,7 +505,9 @@ INSERT INTO `data_types` (`id`, `name`, `slug`, `display_name_singular`, `displa
 (16, 'categories', 'categories', 'Category', 'Categories', 'voyager-categories', 'Pvtl\\VoyagerBlog\\Category', NULL, '\\TCG\\Voyager\\Http\\Controllers\\VoyagerBaseController', '', 1, 0, NULL, '2020-06-16 20:06:43', '2020-06-16 20:06:43'),
 (17, 'pages', 'pages', 'Page', 'Pages', 'voyager-file-text', 'Pvtl\\VoyagerFrontend\\Page', NULL, '\\Pvtl\\VoyagerFrontend\\Http\\Controllers\\PageController', '', 1, 0, NULL, '2020-06-16 20:06:45', '2020-06-16 20:06:45'),
 (22, 'cohorts', 'cohorts', 'Cohort', 'Cohorts', 'voyager-people', 'App\\Cohort', '\\App\\Policies\\CohortPolicy', '\\App\\Http\\Controllers\\CohortController', NULL, 1, 0, '{\"order_column\":\"name\",\"order_display_column\":\"name\",\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-07-09 07:00:02', '2020-07-18 22:46:09'),
-(25, 'experiments', 'experiments', 'Experiment', 'Experiments', NULL, 'App\\Experiment', NULL, NULL, 'Experiments are run from projects and have links for participants.', 1, 0, '{\"order_column\":\"id\",\"order_display_column\":\"id\",\"order_direction\":\"desc\",\"default_search_key\":null,\"scope\":null}', '2020-07-29 14:32:19', '2020-07-31 08:36:45');
+(25, 'experiments', 'experiments', 'Experiment', 'Experiments', NULL, 'App\\Experiment', NULL, '\\App\\Http\\Controllers\\ExperimentsController', 'Experiments are run from projects and have links for participants.', 1, 0, '{\"order_column\":\"id\",\"order_display_column\":\"name\",\"order_direction\":\"desc\",\"default_search_key\":null,\"scope\":null}', '2020-07-29 14:32:19', '2020-08-01 23:44:32'),
+(26, 'links', 'links', 'Link', 'Links', NULL, 'App\\Link', NULL, NULL, NULL, 1, 0, '{\"order_column\":\"id\",\"order_display_column\":\"id\",\"order_direction\":\"desc\",\"default_search_key\":null}', '2020-08-01 10:49:14', '2020-08-01 10:49:14'),
+(28, 'cct_collection_meta', 'cct-collection-meta', 'Cct Collection Metum', 'Cct Collection Meta', NULL, 'App\\CctCollectionMetum', NULL, NULL, 'Data collected from running the CCT at the top level', 1, 0, '{\"order_column\":\"project_name\",\"order_display_column\":\"project_name\",\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-08-03 02:59:59', '2020-08-03 10:11:06');
 
 -- --------------------------------------------------------
 
@@ -469,19 +517,21 @@ INSERT INTO `data_types` (`id`, `name`, `slug`, `display_name_singular`, `displa
 
 CREATE TABLE `experiments` (
   `id` int(10) UNSIGNED NOT NULL,
-  `experiment_token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `experiment_token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `note` text COLLATE utf8mb4_unicode_ci,
-  `project_id` int(11) NOT NULL,
-  `project_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `project_pi_id` int(6) NOT NULL,
-  `cct_id` int(6) NOT NULL,
-  `cct_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cct_asset_path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cohort_id` int(6) NOT NULL,
-  `cohort_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `project_id` int(11) DEFAULT NULL,
+  `project_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `project_pi_id` int(6) DEFAULT NULL,
+  `cct_id` int(6) DEFAULT NULL,
+  `cct_version` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cct_language` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cct_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cct_asset_path` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cohort_id` int(6) DEFAULT NULL,
+  `cohort_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `active` int(11) DEFAULT '1',
-  `created_by` int(6) NOT NULL COMMENT 'user id that created the experiment for audit purposes',
+  `created_by` int(6) DEFAULT NULL COMMENT 'user id that created the experiment for audit purposes',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -491,8 +541,9 @@ CREATE TABLE `experiments` (
 -- Dumping data for table `experiments`
 --
 
-INSERT INTO `experiments` (`id`, `experiment_token`, `name`, `note`, `project_id`, `project_name`, `project_pi_id`, `cct_id`, `cct_name`, `cct_asset_path`, `cohort_id`, `cohort_name`, `active`, `created_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(4, '49c6b15622cf9e97741e87b22a8a6fd6', 'exp-49c6b15622cf9e97741e87b22a8a6fd6', NULL, 4, 'Hungarian Wave 2', 2, 1, 'English V1', 'storage/cct/en/v1', 2, 'English Monolinguals', 1, 1, NULL, NULL, NULL);
+INSERT INTO `experiments` (`id`, `experiment_token`, `name`, `note`, `project_id`, `project_name`, `project_pi_id`, `cct_id`, `cct_version`, `cct_language`, `cct_name`, `cct_asset_path`, `cohort_id`, `cohort_name`, `active`, `created_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(18, '59b4734906ea16c96f05c510e0e61cce', 'Hungarian Wave 2 : 202082-181545', NULL, 4, 'Hungarian Wave 2', 2, 1, '1', 'English', 'English V1', 'storage/cct/english/v1', 2, 'English Monolinguals', 1, 1, NULL, NULL, NULL),
+(19, '46fe07ae4c7c8b1d2a6f7436ee428670', 'SDSU English Wave 1 : 202082-18190', 'added note', 1, 'SDSU English Wave 1', 3, 2, '1', 'Spanish', 'Spanish 1.2', 'storage/cct/spanish/v1', 4, 'Spanish Monolinguals', 1, 1, NULL, '2020-08-03 01:23:46', NULL);
 
 -- --------------------------------------------------------
 
@@ -519,6 +570,8 @@ CREATE TABLE `links` (
   `id` int(10) UNSIGNED NOT NULL,
   `experiment_id` int(11) DEFAULT NULL,
   `participant_id` int(11) DEFAULT NULL,
+  `participant_identifier` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `participant_alias` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `link` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `active` int(11) DEFAULT '1',
@@ -531,17 +584,12 @@ CREATE TABLE `links` (
 -- Dumping data for table `links`
 --
 
-INSERT INTO `links` (`id`, `experiment_id`, `participant_id`, `token`, `link`, `active`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 2, 1, '239338e48081efae055328a4ea4e74ec', 'cct?token=239338e48081efae055328a4ea4e74ec', 1, NULL, NULL, NULL),
-(2, 2, 2, '69b623be87d42bbb7e1a45a6a90dcbc1', 'cct?token=69b623be87d42bbb7e1a45a6a90dcbc1', 1, NULL, NULL, NULL),
-(3, 3, 1, 'c67ecd64f2f96c57e03f79997e815712', 'cct?token=c67ecd64f2f96c57e03f79997e815712', 1, NULL, NULL, NULL),
-(4, 3, 2, '81573cd0fb5f222282de92d628323f54', 'cct?token=81573cd0fb5f222282de92d628323f54', 1, NULL, NULL, NULL),
-(5, 4, 1, '1621b5f1f5a9eea0698173f9db861188', 'cct?token=1621b5f1f5a9eea0698173f9db861188', 1, NULL, NULL, NULL),
-(6, 4, 2, 'db7abef1026324972a827acf4ca7575b', 'cct?token=db7abef1026324972a827acf4ca7575b', 1, NULL, NULL, NULL),
-(7, 5, 1, '0914e6bdc3c84aaf7cecc3ad13310c7d', 'cct?token=0914e6bdc3c84aaf7cecc3ad13310c7d', 1, NULL, NULL, NULL),
-(8, 5, 2, '1d4ebc5b2b30e9c137a0bb52223c3fcb', 'cct?token=1d4ebc5b2b30e9c137a0bb52223c3fcb', 1, NULL, NULL, NULL),
-(9, 6, 1, '05c8bd00effd5f2040497020d4ce5bd5', 'cct?token=05c8bd00effd5f2040497020d4ce5bd5', 1, NULL, NULL, NULL),
-(10, 6, 2, 'b97ae01234979799befde7b2d35290ba', 'cct?token=b97ae01234979799befde7b2d35290ba', 1, NULL, NULL, NULL);
+INSERT INTO `links` (`id`, `experiment_id`, `participant_id`, `participant_identifier`, `participant_alias`, `token`, `link`, `active`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(32, 18, 1, '800', 'sdsu_en_w1_800', 'f7b938a0dd2c665e0933222007c68f91', '/cct?token=f7b938a0dd2c665e0933222007c68f91', 1, NULL, NULL, NULL),
+(33, 18, 2, '801', 'sdsu_en_w1_801', '084e9dc900aaf6a315bae09f89d23f12', '/cct?token=084e9dc900aaf6a315bae09f89d23f12', 1, NULL, NULL, NULL),
+(34, 19, 3, '900', 'sdsu_sp_w1_900', '6ab87dded8740feacafaf5a800c164ad', '/cct?token=6ab87dded8740feacafaf5a800c164ad', 1, NULL, NULL, NULL),
+(35, 19, 4, '901', 'sdsu_sp_w1_901', 'f401e7c2faede577a598f78442ff1d5a', '/cct?token=f401e7c2faede577a598f78442ff1d5a', 1, NULL, NULL, NULL),
+(36, 19, 5, '902', 'sdsu_sp_w1_902', '2938852806558b84ee0b59573192ac03', '/cct?token=2938852806558b84ee0b59573192ac03', 1, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -619,7 +667,9 @@ INSERT INTO `menu_items` (`id`, `menu_id`, `title`, `url`, `target`, `icon_class
 (28, 3, 'Google+', 'https://plus.google.com/100970850483584616344', '_blank', 'fa-google-plus-square', NULL, NULL, 4, '2020-06-16 20:06:45', '2020-06-16 20:06:45', NULL, NULL),
 (29, 3, 'LinkedIn', 'https://www.linkedin.com/company/pivotal-agency', '_blank', 'fa-linkedin', NULL, NULL, 5, '2020-06-16 20:06:45', '2020-06-16 20:06:45', NULL, NULL),
 (34, 1, 'Cohorts', '', '_self', 'voyager-people', '#000000', NULL, 3, '2020-07-09 07:00:02', '2020-07-09 12:20:04', 'voyager.cohorts.index', 'null'),
-(36, 1, 'Experiments', '', '_self', 'voyager-lab', '#000000', NULL, 5, '2020-07-29 14:32:19', '2020-07-29 23:55:04', 'voyager.experiments.index', 'null');
+(36, 1, 'Experiments', '', '_self', 'voyager-lab', '#000000', NULL, 5, '2020-07-29 14:32:19', '2020-07-29 23:55:04', 'voyager.experiments.index', 'null'),
+(37, 1, 'Links', '', '_self', NULL, NULL, NULL, 14, '2020-08-01 10:49:14', '2020-08-01 10:49:14', 'voyager.links.index', NULL),
+(38, 1, 'Cct Collection Meta', '', '_self', NULL, NULL, NULL, 15, '2020-08-03 02:59:59', '2020-08-03 02:59:59', 'voyager.cct-collection-meta.index', NULL);
 
 -- --------------------------------------------------------
 
@@ -840,7 +890,17 @@ INSERT INTO `permissions` (`id`, `key`, `table_name`, `created_at`, `updated_at`
 (108, 'read_experiments', 'experiments', '2020-07-29 14:32:19', '2020-07-29 14:32:19'),
 (109, 'edit_experiments', 'experiments', '2020-07-29 14:32:19', '2020-07-29 14:32:19'),
 (110, 'add_experiments', 'experiments', '2020-07-29 14:32:19', '2020-07-29 14:32:19'),
-(111, 'delete_experiments', 'experiments', '2020-07-29 14:32:19', '2020-07-29 14:32:19');
+(111, 'delete_experiments', 'experiments', '2020-07-29 14:32:19', '2020-07-29 14:32:19'),
+(112, 'browse_links', 'links', '2020-08-01 10:49:14', '2020-08-01 10:49:14'),
+(113, 'read_links', 'links', '2020-08-01 10:49:14', '2020-08-01 10:49:14'),
+(114, 'edit_links', 'links', '2020-08-01 10:49:14', '2020-08-01 10:49:14'),
+(115, 'add_links', 'links', '2020-08-01 10:49:14', '2020-08-01 10:49:14'),
+(116, 'delete_links', 'links', '2020-08-01 10:49:14', '2020-08-01 10:49:14'),
+(117, 'browse_cct_collection_meta', 'cct_collection_meta', '2020-08-03 02:59:59', '2020-08-03 02:59:59'),
+(118, 'read_cct_collection_meta', 'cct_collection_meta', '2020-08-03 02:59:59', '2020-08-03 02:59:59'),
+(119, 'edit_cct_collection_meta', 'cct_collection_meta', '2020-08-03 02:59:59', '2020-08-03 02:59:59'),
+(120, 'add_cct_collection_meta', 'cct_collection_meta', '2020-08-03 02:59:59', '2020-08-03 02:59:59'),
+(121, 'delete_cct_collection_meta', 'cct_collection_meta', '2020-08-03 02:59:59', '2020-08-03 02:59:59');
 
 -- --------------------------------------------------------
 
@@ -911,21 +971,16 @@ INSERT INTO `permission_role` (`permission_id`, `role_id`) VALUES
 (32, 1),
 (32, 2),
 (32, 4),
-(32, 5),
 (33, 1),
 (33, 2),
 (33, 4),
-(33, 5),
 (34, 1),
 (34, 2),
 (34, 4),
-(34, 5),
 (35, 1),
 (35, 2),
-(35, 5),
 (36, 1),
 (36, 2),
-(36, 5),
 (37, 1),
 (37, 5),
 (38, 1),
@@ -939,23 +994,18 @@ INSERT INTO `permission_role` (`permission_id`, `role_id`) VALUES
 (42, 1),
 (42, 2),
 (42, 4),
-(42, 5),
 (43, 1),
 (43, 2),
 (43, 4),
-(43, 5),
 (44, 1),
 (44, 2),
 (44, 4),
-(44, 5),
 (45, 1),
 (45, 2),
 (45, 4),
-(45, 5),
 (46, 1),
 (46, 2),
 (46, 4),
-(46, 5),
 (52, 1),
 (53, 1),
 (54, 1),
@@ -984,40 +1034,39 @@ INSERT INTO `permission_role` (`permission_id`, `role_id`) VALUES
 (97, 1),
 (97, 2),
 (97, 4),
-(97, 5),
 (98, 1),
 (98, 2),
 (98, 4),
-(98, 5),
 (99, 1),
 (99, 2),
-(99, 5),
 (100, 1),
 (100, 2),
-(100, 5),
 (101, 1),
 (101, 2),
-(101, 5),
 (107, 1),
 (107, 2),
 (107, 4),
-(107, 5),
 (108, 1),
 (108, 2),
 (108, 4),
-(108, 5),
 (109, 1),
 (109, 2),
 (109, 4),
-(109, 5),
-(110, 1),
-(110, 2),
-(110, 4),
-(110, 5),
 (111, 1),
 (111, 2),
 (111, 4),
-(111, 5);
+(112, 1),
+(113, 1),
+(114, 1),
+(115, 1),
+(116, 1),
+(117, 1),
+(117, 2),
+(117, 4),
+(118, 1),
+(118, 2),
+(118, 4),
+(121, 1);
 
 -- --------------------------------------------------------
 
@@ -1497,7 +1546,7 @@ ALTER TABLE `cct_collection_data`
 -- AUTO_INCREMENT for table `cct_collection_meta`
 --
 ALTER TABLE `cct_collection_meta`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `cct_project`
@@ -1533,19 +1582,19 @@ ALTER TABLE `cohort_project`
 -- AUTO_INCREMENT for table `data_rows`
 --
 ALTER TABLE `data_rows`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=198;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=229;
 
 --
 -- AUTO_INCREMENT for table `data_types`
 --
 ALTER TABLE `data_types`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `experiments`
 --
 ALTER TABLE `experiments`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1557,7 +1606,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `links`
 --
 ALTER TABLE `links`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `menus`
@@ -1569,7 +1618,7 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `menu_items`
 --
 ALTER TABLE `menu_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -1593,7 +1642,7 @@ ALTER TABLE `participants`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
 
 --
 -- AUTO_INCREMENT for table `projects`

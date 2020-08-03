@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,10 +21,16 @@ use Illuminate\Support\Facades\Route;
 // This does the same thing but uses the view command instead of the server verb
 // Route::view('/', 'welcome');
 
-// This will be the true unprotected front end for access to the CCT
+// This is the unprotected front end for access to the CCT
 // Users are authenticated with a simple token in the URL
-// Route is work in progress 
-Route::view('/cct', 'voyager-frontend::cct', ['as' => 'cct']);
+Route::get('cct', 'CctController@index', function () {
+    return view('cct'); 
+});
+
+// Data collections for the AJAX call
+Route::any('data_catcher', 'CctDataController@index', function () {
+    return; 
+});
 
 // Make the root page route to the login for now. No public pages yet.
 Route::get('/', function () {
