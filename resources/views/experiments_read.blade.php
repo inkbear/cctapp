@@ -168,9 +168,9 @@
                                             <i class="glyphicon glyphicon-pencil"></i> <span class="hidden-xs hidden-sm">Edit</span>
                                         </a>
                                         <a href="{{ $root_url }}{{ $row->link }}&env=preview" title="Preview" class="btn btn-sm btn-warning pull-left edit">
-                                            <i class="voyager-eye"></i> <span class="hidden-xs hidden-sm">Preview</span>
+                                            <i class="voyager-check"></i> <span class="hidden-xs hidden-sm">Preview</span>
                                         </a>
-                                        <a href="{{ $row->link }}&env=test" title="Test" class="btn btn-sm btn-warning pull-left edit">
+                                        <a href="{{ $root_url }}{{ $row->link }}&env=test" title="Test" class="btn btn-sm btn-warning pull-left edit">
                                             <i class="voyager-check-circle"></i> <span class="hidden-xs hidden-sm">Test</span>
                                         </a>
                                         <a href="#" title="Copy" class="btn btn-sm btn-success pull-left edit" onclick="copyLink()">

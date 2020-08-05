@@ -11,7 +11,12 @@
                 @endcan  
         @endif
 
-        @if( isset($view) && ($view == 'edit' || $view == 'add') && $row->type == 'text')
+
+
+        @if( isset($view) && $view == 'browse' && $row->type == 'text' && $row->field == 'link' )
+                @php $root_url = "http://" . $_SERVER['SERVER_NAME']; @endphp
+                <input type="text" value="{{ $root_url }}{{ $data->link }}" id="link" class="form-control pull-left">
+        @elseif( isset($view) && ($view == 'edit' || $view == 'add') && $row->type == 'text')
                 <!-- Text  -->
                 <input 
                 type="text" class="form-control" 
