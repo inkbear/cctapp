@@ -146,21 +146,38 @@
                         </div>
                     <div class="panel-body" style="padding-top:0;">
                         <div class="table-responsive">
+                        @php $root_url = "http://" . $_SERVER['SERVER_NAME']; @endphp
                             <table id="dataTable" class="table table-hover">
                             <tr>
                                 <th>Participant Identifier</th>
-                                <th>experiment Alias</th>
-                                <!-- <th>token</th> -->
-                                <th>link</th>
-                                <th>active</th>
+                                <th>Participant Alias</th>
+                                <th>Active</th>
+                                <th>Link</th>
+                                <th>Actions</th>
                             </tr>
                             @foreach($dataLinks as $row)
                                 <tr>
                                     <td>{{ $row->participant_identifier }}</td>
                                     <td>{{ $row->participant_alias }}</td>
-                                    <!-- <td>{{ $row->token }}</td> -->
-                                    <td><a href="{{ $row->link }}" target="_blank">{{ $row->link }}</a></td>
                                     <td>{{ $row->active }}</td>
+                                    <td>
+                                        <input type="text" size=20 value="{{ $root_url }}{{ $row->link }}" id="link" class="form-control pull-left">
+                                    </td>
+                                    <td>
+                                        <a href="/admin/links/{{ $row->id }}/edit" title="Edit" class="btn btn-sm btn-primary pull-left edit">
+                                            <i class="glyphicon glyphicon-pencil"></i> <span class="hidden-xs hidden-sm">Edit</span>
+                                        </a>
+                                        <a href="{{ $root_url }}{{ $row->link }}&env=preview" title="Preview" class="btn btn-sm btn-warning pull-left edit">
+                                            <i class="voyager-eye"></i> <span class="hidden-xs hidden-sm">Preview</span>
+                                        </a>
+                                        <a href="{{ $row->link }}&env=test" title="Test" class="btn btn-sm btn-warning pull-left edit">
+                                            <i class="voyager-check-circle"></i> <span class="hidden-xs hidden-sm">Test</span>
+                                        </a>
+                                        <a href="#" title="Copy" class="btn btn-sm btn-success pull-left edit" onclick="copyLink()">
+                                            <i class="voyager-rocket "></i> <span class="hidden-xs hidden-sm">Copy Link</span>
+                                        </a>
+                                    </td>
+                                    
                                 </tr>
                             @endforeach
                         </table>
@@ -216,6 +233,20 @@
 
             $('#delete_modal').modal('show');
         });
+        
+        function copyLink() {
+            /* Get the text field */
+            var copyText = document.getElementById("link");
 
+            /* Select the text field */
+            copyText.select(); 
+            copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+            /* Copy the text inside the text field */
+            document.execCommand("copy");
+
+            /* Alert the copied text */
+            alert("Copied the link: " + copyText.value);
+        }
     </script>
 @stop

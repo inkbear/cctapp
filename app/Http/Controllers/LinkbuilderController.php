@@ -28,18 +28,47 @@ class LinkbuilderController extends Controller
     public function index(Request $request)
     {
         $project_id = $request->input('project_id');
+        // DB::enableQueryLog();
 
         // Get the project data including the names for the CCT and Cohort
         $project_data = DB::table('projects', 'p')
             ->select('p.*', 'ccts.id AS cct_id', 'ccts.version AS cct_version', 'ccts.language AS cct_language', 
                 'ccts.name AS cct_name', 'ccts.asset_path AS cct_asset_path', 
                 'cohorts.id AS cohort_id', 'cohorts.name AS cohort_name')
-            ->join('cct_project', 'p.id', '=', 'cct_project.project_id' )
-            ->join('ccts', 'cct_project.cct_id', '=', 'ccts.id' )
-            ->join('cohort_project', 'p.id', '=', 'cohort_project.project_id' )
-            ->join('cohorts', 'cohort_project.cohort_id', '=', 'cohorts.id' )
+            ->join('ccts', 'p.cct_id', '=', 'ccts.id' )
+            ->join('cohorts', 'p.cohort_id', '=', 'cohorts.id' )
             ->where('p.id', '=', $project_id )
             ->first();
+        
+        // Eroor checking
+        $error = 0;
+        $message = '';
+        // Check if all the project components are in place
+        if( !(isset($project_data->name) &&
+            isset($project_data->pi_id) &&
+            isset($project_data->cct_id) &&
+            isset($project_data->cct_asset_path) &&
+            isset($project_data->cohort_id) 
+            )){  
+            $error = 1;
+            $message = "Incomplete data for making links.";    
+        }
+
+        // Get the participant data
+        $p_data = DB::table('participants', 'p')
+            ->select('p.*')
+            ->where('p.cohort_id', '=', $project_data->cohort_id )
+            ->get();
+        
+        // Eroor checking
+        if(!(isset($p_data[0]->id))){
+            $error = 1;
+            $message = "Cohort must have at least one particpant.";    
+        }
+
+        if ($error == 1){
+            return redirect('/admin/projects/')->with(['message' => $message, 'alert-type' => 'error']); 
+        }
 
         // Generate static values
         $token = bin2hex(random_bytes(16));
@@ -68,12 +97,6 @@ class LinkbuilderController extends Controller
             ]
         );
 
-        // Get the participant data
-        $p_data = DB::table('participants', 'p')
-            ->select('p.*')
-            ->where('p.cohort_id', '=', $project_data->cohort_id )
-            ->get();
-
         // Get the id for the experiment just stored
         $e_data = DB::table('experiments', 'e')
             ->select('e.id')
@@ -99,7 +122,7 @@ class LinkbuilderController extends Controller
             );
         }
 
-        // Show the resutls using the regular BREAD view
+        // Show the results using the regular BREAD view
         return redirect('/admin/experiments/' . $experiment_id);
 
     }

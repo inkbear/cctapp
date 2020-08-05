@@ -28,45 +28,62 @@ class CctDataController extends Controller
 
         $str_json = file_get_contents('php://input'); //($_POST doesn't work here)
         $data_array = json_decode($str_json, true); // decoding received JSON to array
-        
-        // Log::info('str_json: ' . $str_json );
-
-        Log::info('data_array: ' . $data_array[0]['trial_part'] );
-
-        // store meta data
         $now = DB::raw('NOW()');
-        DB::table('cct_collection_meta')->insert([
-            'data_raw' => $str_json,
-            'created_at' => $now,
-        ]);
-        // DB::table('cct_collection_meta')->insert([
-        //     'token' => $data_array[0]['token'],
-        //     'project_id' => $data_array[0]['project_id'],
-        //     'project_name' => $data_array[0]['project_name'],
-        //     'project_pi_id' => $data_array[0]['project_pi_id'],
-        //     'experiment_id' => $data_array[0]['experiment_id'],
-        //     'experiment_name' => $data_array[0]['experiment_name'],
-        //     'note' => $data_array[0]['note'],
-        //     'cct_id' => $data_array[0]['cct_id'],
-        //     'cct_version' => $data_array[0]['cct_version'],
-        //     'cct_language' => $data_array[0]['cct_language'],
-        //     'cct_name' => $data_array[0]['cct_name'],
-        //     'cohort_id' => $data_array[0]['cohort_id'],
-        //     'cohort_name' => $data_array[0]['cohort_name'],
-        //     'participant_id' => $data_array[0]['participant_id'],
-        //     'test_type' => $data_array[0]['test_type'],
-        //     'data_raw' => $str_json,
-        //     'created_at' => $now,
-        // ]);
-        
-        // store trail data - WORK IN PROGRESS
+        // DB::enableQueryLog();
+
+        // if($data_array[0]['test_type'] == 'preview'){
+        //     return ('{}');
+        // }
+
+        foreach($data_array as $data){
+            if($data['trial_part'] == 'test'){
+                DB::table('cct_collection_data')->insert([
+                    'rt' => $data['rt'], // 1160,
+                    'stimulus' => $data['stimulus'], // "storage/cct/english/v1/touch_horse.mp3",
+                    'button_pressed' => $data['button_pressed'],  // "0",
+                    'trial_part' => $data['trial_part'],  // "test",
+                    'target' => $data['target'],  // "horse",
+                    'distractor' => $data['distractor'],  // "cow",
+                    'trial_type' => $data['trial_type'],  // "audio-button-response",
+                    'trial_index' => $data['trial_index'], // 1,
+                    'time_elapsed' => $data['time_elapsed'], // 4352,
+                    'internal_node_id' => $data['internal_node_id'],  // "0.0-1.0-0.0",
+                    'token' => $data['token'],  // "f7b938a0dd2c665e0933222007c68f91",
+                    'project_id' => $data['project_id'],  // "4",
+                    'project_name' => $data['project_name'],  // "Hungarian Wave 2",
+                    'project_pi_id' => $data['project_pi_id'],  // "2",
+                    'experiment_id' => $data['experiment_id'],  // "18",
+                    'experiment_name' => $data['experiment_name'],  // "Hungarian Wave 2 : 202082-181545",
+                    'note' => $data['note'],  // "",
+                    'cct_id' => $data['cct_id'],  // "1",
+                    'cct_version' => $data['cct_version'],  // "1",
+                    'cct_language' => $data['cct_language'],  // "English",
+                    'cct_name' => $data['cct_name'],  // "English V1",
+                    'cohort_id' => $data['cohort_id'],  // "2",
+                    'cohort_name' => $data['cohort_name'],  // "English Monolinguals",
+                    'participant_id' => $data['participant_id'],  // "1",
+                    'participant_identifier' => $data['participant_identifier'],  // "800",
+                    'participant_alias' => $data['participant_alias'],  // "sdsu_en_w1_800",
+                    'correct' => $data['correct'],  // true
+                    'test_type' => $data['test_type'],  // LIVE | TEST
+                    'json_raw' => $str_json,
+                    'created_at' => $now,
+                ]);
+
+            }
+        }
+
+        // $log = dd(DB::getQueryLog());
+        // Log::info('SQL: ' . $log);
+
+        // store trail data based on avaialble fields for a more flexible interface - WORK IN PROGRESS
         // for($i=0; $i < count($data_array); $i++){
         //     for($j = 0; $j < count($col_names); $j++){
         //         $colname = $col_names[$j];
         //         if(!isset($data_array[$i][$colname])){
-        //             $insertstmt->bindValue(":$colname", null, PDO::PARAM_NULL);
+        //             $insertstmt->bindValue(' => $data[''] $colname", null, PDO::PARAM_NULL);
         //         } else {
-        //             $insertstmt->bindValue(":$colname", $data_array[$i][$colname]);
+        //             $insertstmt->bindValue(' => $data[''] $colname", $data_array[$i][$colname]);
         //         }
         //     }
         //     $insertstmt->execute();

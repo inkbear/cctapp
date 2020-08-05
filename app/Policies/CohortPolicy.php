@@ -92,7 +92,7 @@ class CohortPolicy
         }
 
         // Check the collaborator assignments
-        $sql = "SELECT p.*, u.*
+        $sql = "SELECT p.id
         FROM cohorts AS c,
         cohort_project AS cp,
         projects AS p,
@@ -103,7 +103,7 @@ class CohortPolicy
         AND p.id = pc.project_id
         AND pc.user_id = u.id
         AND u.id = '$user->id' 
-        AND cohort_id = '$cohort->id'
+        AND p.cohort_id = '$cohort->id'
         ";
 
         $results = DB::select( DB::raw("$sql") );
@@ -151,7 +151,7 @@ class CohortPolicy
         // }
 
         // Check the collaborator assignments
-        $sql = "SELECT p.id, c.id, u.id
+        $sql = "SELECT p.id
         FROM cohorts AS c,
         cohort_project AS cp,
         projects AS p,
@@ -162,7 +162,7 @@ class CohortPolicy
         AND p.id = pc.project_id
         AND pc.user_id = u.id
         AND u.id = '$user->id' 
-        AND cohort_id = '$cohort->id'
+        AND p.cohort_id = '$cohort->id'
         ";
 
         $results = DB::select( DB::raw("$sql") );

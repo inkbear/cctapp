@@ -10,7 +10,7 @@ The Primary Investigator is responsible for:
 1. Adding participants
 1. Running experiments
 
-## Building a Project
+## Creating Projects
 
 Projects are managed in the project admin. Only some basic information is required 
 remaining components may be added later as they are available.
@@ -35,7 +35,7 @@ as staff or collaborator on another project.
 Cohorts are the grouping of participants to assign them as a group to projects.
 Participants may belong to multiple cohorts. 
 
-Cohorts are created and managed in the cohort admin.
+Cohorts are created and managed in the cohort admin but are assigned to projects in the project admin.
 
 ## Adding Participants
 
@@ -45,6 +45,17 @@ identifying information is highly recommended.
 
 Particiants are added to a cohort on this screen as well.
 
-## Running Experiments
+## Creating Experiments
 
-TBD
+An Experiment is a group of participant links and additional data generated from the 
+project browse list.
+
+In the list of projects click the green Make Links button. The project data will be used to
+createa  unique experiment containing the experiment data and a collection of links for use by 
+participants.
+
+## Viewing Collected Data
+
+The Data Collection page will list all data collections ordered by project and experiment creation date. 
+Viewing a single item will show all the participant responses for each generated link. If a link was used more
+than once, there will be multiple entries.

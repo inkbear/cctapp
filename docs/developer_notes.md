@@ -22,7 +22,7 @@ cctapp as UTF8 MB4 ci
 
 ## Install Voyager
 
-* Install Voayager at cmmand line
+* Install Voyager at command line
 
         composer require tcg/voyager
         php artisan voyager:install

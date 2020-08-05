@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -149,6 +148,7 @@
         participant_id: '{{ $experiment_data->participant_id }}', 
         participant_identifier: '{{ $experiment_data->participant_identifier }}', 
         participant_alias: '{{ $experiment_data->participant_alias }}', 
+        test_type: '{{ $experiment_data->test_type }}', 
     });
 
     
@@ -159,6 +159,7 @@
         xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}');
         xhr.send(jsPsych.data.get().json());
         // console.log(jsPsych.data.get().json());
+        return;
     }
 
     
@@ -177,8 +178,12 @@
         use_webaudio: false,
         // show the raw json data - to be removed for live
         on_finish: function() {
-            saveData();
-            jsPsych.data.displayData();
+            if( '{{ $experiment_data->test_type }}' != 'preview'){
+                saveData(); 
+            }
+            if( '{{ $experiment_data->test_type }}' != 'live'){
+                jsPsych.data.displayData();
+            }
         }
     });
 
