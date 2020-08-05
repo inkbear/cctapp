@@ -178,7 +178,7 @@ JSON Example:
 
 Create a custom browse template to filter out admin from list of users when a non-admin is viewing. 
 
-*Note: Other admin have to be created with:* 
+* Note: Other admin have to be created with:* 
 
         php artisan voyager:admin your@email.com
 

@@ -29,4 +29,4 @@ making note of the folder path.
 ## Provisioning the CCT
 
 User accounts with role of PI may be added to the CCT in the CCT admin. User 
-accounts to be added must hav ehte roole of PI assigned to them in the user admin.
+accounts to be added must have the role of PI assigned to them in the user admin.

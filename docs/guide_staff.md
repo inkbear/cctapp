@@ -48,7 +48,7 @@ Particiants are added to a cohort on this screen as well.
 An Experiment is a group of participant links and additional data generated from the 
 project browse list.
 
-In the list of projects click the green Make Links button. The project data will be used to
+In the list of projects click the green __Make Links__ button. The project data will be used to
 createa  unique experiment containing the experiment data and a collection of links for use by 
 participants.
 

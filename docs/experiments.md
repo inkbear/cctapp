@@ -18,7 +18,7 @@ Assuming the PI has been provisioned at least one CCT, the PI will need to:
 
 ## Creating a Project
 
-Projects are managed in the project admin. Only some basic information is required 
+Projects are managed in the project admin. Only some basic information is required, 
 remaining components may be added later as they are available.
 
 Projects are the main containers that hold:
@@ -28,11 +28,10 @@ Projects are the main containers that hold:
 * Zero or more staff
 * A single cohort of participants
 
-The CCT available for linking is based on the CCT assigned by the CCT Owner to 
-the current PI.
+The CCT available for linking is based on the CCT assigned by the CCT Owner to a PI.
 
 Selection choices for collaborators and staff include all registered users in the
-system except CCT Owner and Admin. This allows unique combinations of teams regardless 
+system except thos accounts with a role of CCT Owner or Admin. This allows unique combinations of teams regardless 
 of roles on other projects, e.g. a grad student could be a PI on one project while acting 
 as staff or collaborator on another project.
 
@@ -56,24 +55,36 @@ See also: [PI](guide_pi.md#creating-cohorts), [Collaborator](guide_collaborator.
 
 ## Creating Experiments
 
-An Experiment is a group of participant links and additional data generated from the 
-project browse list.
+An Experiment is a group of participant links and additional data generated from project data.
 
-In the list of projects click the green Make Links button. The project data will be used to
+In the list of projects click the green __Make Links__ button. The project data will be used to
 create a unique experiment containing the experiment data and a collection of links for use by 
 participants.
 
-The required minimum amount of configuration to generate an experiment are Project, CCT, Cohort (with at least one participant).
+The required minimum amount of configuration to generate an experiment are:
 
-See also: [PI](guide_pi.md#creating-experiments), [Collaborator](guide_collaborator.md#creating-experiments), or [Staff](guide_staff.md#creating-experiments) guide.
+* A project 
+* A CCT version 
+* A Cohort (with at least one participant).
 
-## Previewing the Experiment
+If the experiment and its links are successfully generated the next view will be the experiment detail page with the the 
+experiment data and a list of links.
 
-TBD
+See also: [PI](guide_pi.md#creating-experiments), [Collaborator](guide_collaborator.md#creating-experiments), 
+or [Staff](guide_staff.md#creating-experiments) guide.
 
-## Testing the Eperiment
+## Previewing and Testing the Experiment
 
-TBD
+On the resulting experiment detail page, each row containing a link will have buttons for preview, test, and copy. 
+hese links and the buttons my be reached by navigating on the main memu to __Experiments__ >> __View__ or __Links__.
+
+The three experiments modes are:
+
+* Preview: Opens the experiment in the browser, does __not__ record the test results in the database but will show 
+the test results as the last screen of the test.
+* Test: Opens the experiment in the browser and records the test results in the database (flagged as a test run). The 
+view is identical to the live view with test results not shown on the last screen.
+* Copy Link: Copies the live link to the clipbard for pasting into an email to the recipient or other method of sharing.
 
 ## Running the Experiment
 
@@ -81,6 +92,6 @@ The list of links are unique for each participant and only contain a token in th
 
 ## Viewing Collected Data
 
-The Data Collection page will list all data collections ordered by project and experiment creation date. 
+The Data Collection page lists all data collections ordered by project and experiment creation date. 
 Viewing a single item will show all the participant responses for each generated link. If a link was used more
 than once, there will be multiple entries.
