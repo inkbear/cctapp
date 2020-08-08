@@ -96,4 +96,14 @@ class ExperimentPolicy
         }
         return $allow;
     }
+
+    public function testaccess(User $user, Data $data){
+        $allow = true;
+        // if( $data->project_pi_id == $user->id ){
+        //     $allow = true;
+        // }
+        
+        return $allow;
+    }
+
 }

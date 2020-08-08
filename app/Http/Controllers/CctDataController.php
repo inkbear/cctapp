@@ -31,9 +31,7 @@ class CctDataController extends Controller
         $now = DB::raw('NOW()');
         // DB::enableQueryLog();
 
-        // if($data_array[0]['test_type'] == 'preview'){
-        //     return ('{}');
-        // }
+        // CHECK IF THE TOKEN IS VALID
 
         foreach($data_array as $data){
             if($data['trial_part'] == 'test'){

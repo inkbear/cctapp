@@ -16,6 +16,7 @@
                 <div class="panel panel-bordered" style="padding-bottom:5px;">
                     <div class="panel-heading" style="border-bottom:0;">
                         <h3 class="panel-title">Test Configurations</h3>
+
                     </div>
                     <div class="panel-body" style="padding-top:0;">
                         <div class="table-responsive">
@@ -25,10 +26,11 @@
                                 <th>PI</th>
                                 <th>Experiment</th>
                                 <th>Cohort</th>
-                                <th>Complete/Total</th>
+                                <th>Complete Live/Total</th>
                                 <th>Actions</th>
                             </tr>
                             @foreach($dataContent as $row)
+
                                 <tr>
                                     <td>{{ $row->project_name }}</td>
                                     <td>{{ $row->pi_name }}</td>
@@ -37,15 +39,23 @@
                                     <td>{{ $row->complete }}/{{ $row->total }}</td>
                                     <td>
                                         @if($row->complete > 0)
-                                        <a href="/admin/data/{{ $row->id }}/view" title="Edit" class="btn btn-sm btn-primary pull-left edit">
-                                            <i class="voyager-data"></i> <span class="hidden-xs hidden-sm">View</span>
+                                        <a href="/admin/data/{{ $row->id }}/view/live" title="View" class="btn btn-sm btn-primary pull-left edit">
+                                            <i class="voyager-data"></i> <span class="hidden-xs hidden-sm">View Live Data</span>
                                         </a>
+                                        @endif
+                                        @if($row->test_qty > 0)
+                                        <a href="/admin/data/{{ $row->id }}/view/test" title="View" class="btn btn-sm btn-primary pull-left edit">
+                                            <i class="voyager-data"></i> <span class="hidden-xs hidden-sm">View Test Data</span>
+                                        </a>
+                                        @endif
+                                        @if($row->test_qty > 0 || $row->complete > 0)
                                         <a href="/admin/download/{{ $row->id }}" title="Export" class="btn btn-sm btn-primary pull-left edit">
-                                            <i class="voyager-download"></i> <span class="hidden-xs hidden-sm">Download</span>
+                                            <i class="voyager-download"></i> <span class="hidden-xs hidden-sm">Download All Data</span>
                                         </a>
                                         @endif
                                     </td>                                  
                                 </tr>
+                                
                             @endforeach
                         </table>
                     </div>
