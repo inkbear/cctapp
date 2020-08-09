@@ -30,3 +30,8 @@ making note of the folder path.
 
 User accounts with role of PI may be added to the CCT in the CCT admin. User 
 accounts to be added must have the role of PI assigned to them in the user admin.
+
+## Notes
+
+The owner dashboard will not show data on the cards as the information is not relevant to the 
+owner role. The dashboard will be updated later to show owner information.

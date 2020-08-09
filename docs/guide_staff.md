@@ -52,8 +52,18 @@ In the list of projects click the green __Make Links__ button. The project data 
 createa  unique experiment containing the experiment data and a collection of links for use by 
 participants.
 
-## Viewing Collected Data
+## Viewing Collected Experiment Data
 
-The Data Collection page will list all data collections ordered by project and experiment creation date. 
+The Experiment Data page lists all data collections ordered by project and experiment creation date. If data has been collected buttons will show for accessing the data (view test data, view live data, download all data). Downloads are in CSV format and contain all columns except some system data e.g. "soft delete date".
+
 Viewing a single item will show all the participant responses for each generated link. If a link was used more
-than once, there will be multiple entries.
+than once, there will be multiple entries. Be sure to scroll left/right to view all the columns!
+
+## Dashboard
+
+The landing page after logging in is the dashboard. The cards on the dashboard show summary information for:
+
+* __Project Summary__ displays the project build (cct, cohort, experiment).
+* __Experiment Progress__ displays the percentage of completed live data collections.
+* __Cohort Summary__ list of cohorts regardless of project assignment with number of participants in the cohort.
+* __My CCT for Project Assignment__ list of CCT assigned to you as PI by the CCT owner.

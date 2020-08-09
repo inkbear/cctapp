@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 05, 2020 at 09:25 PM
+-- Generation Time: Aug 09, 2020 at 08:52 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.2
 
@@ -405,15 +405,15 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (82, 17, 'id', 'number', 'ID', 1, 0, 0, 0, 0, 0, '\"\"', 1),
 (83, 17, 'author_id', 'text', 'Author ID', 1, 0, 0, 0, 0, 0, '\"\"', 2),
 (84, 17, 'title', 'text', 'Title', 1, 1, 1, 1, 1, 1, '\"\"', 3),
-(85, 17, 'excerpt', 'text_area', 'Excerpt', 0, 0, 1, 1, 1, 1, '\"\"', 4),
-(86, 17, 'body', 'rich_text_box', 'Body', 1, 0, 1, 1, 1, 1, '\"\"', 5),
+(85, 17, 'excerpt', 'text_area', 'Excerpt', 0, 0, 0, 0, 0, 0, '\"\"', 4),
+(86, 17, 'body', 'rich_text_box', 'Body', 0, 0, 1, 1, 1, 1, '\"\"', 5),
 (87, 17, 'slug', 'text', 'Slug', 1, 0, 1, 1, 1, 1, '{\"slugify\":{\"origin\":\"title\"},\"validation\":{\"rule\":\"unique:pages,slug\"}}', 6),
 (88, 17, 'meta_description', 'text', 'Meta Description', 0, 0, 1, 1, 1, 1, '\"\"', 7),
-(89, 17, 'status', 'select_dropdown', 'Status', 1, 1, 1, 1, 1, 1, '{\"default\":\"INACTIVE\",\"options\":{\"INACTIVE\":\"INACTIVE\",\"ACTIVE\":\"ACTIVE\"}}', 8),
-(90, 17, 'created_at', 'timestamp', 'Created At', 1, 1, 1, 0, 0, 0, '\"\"', 9),
-(91, 17, 'updated_at', 'timestamp', 'Updated At', 1, 0, 0, 0, 0, 0, '\"\"', 10),
-(92, 17, 'image', 'image', 'Image', 0, 1, 1, 1, 1, 1, '\"\"', 11),
-(93, 17, 'layout', 'frontend_layout', 'Layout', 1, 0, 1, 1, 1, 1, '\"\"', 12),
+(89, 17, 'status', 'checkbox', 'Status', 1, 1, 1, 1, 1, 1, '{\"default\":\"INACTIVE\",\"options\":{\"INACTIVE\":\"INACTIVE\",\"ACTIVE\":\"ACTIVE\"}}', 8),
+(90, 17, 'created_at', 'timestamp', 'Created At', 0, 0, 0, 0, 0, 0, '\"\"', 9),
+(91, 17, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '\"\"', 10),
+(92, 17, 'image', 'image', 'Image', 0, 0, 0, 0, 0, 0, '\"\"', 11),
+(93, 17, 'layout', 'frontend_layout', 'Layout', 0, 0, 0, 0, 0, 0, '\"\"', 12),
 (95, 3, 'rank', 'number', 'Rank', 0, 1, 1, 1, 1, 1, '{}', 6),
 (96, 1, 'email_verified_at', 'timestamp', 'Email Verified At', 0, 0, 0, 0, 0, 0, '{}', 6),
 (109, 6, 'project_belongsto_user_relationship', 'relationship', 'Primary Investigator', 0, 1, 1, 1, 1, 1, '{\"description\":\"The Primary Investigator who owns this project\",\"view\":\"project_pi_relationship_dropdown\",\"model\":\"App\\\\User\",\"table\":\"users\",\"type\":\"belongsTo\",\"column\":\"pi_id\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"blog_posts\",\"pivot\":\"0\",\"taggable\":\"0\"}', 9),
@@ -542,7 +542,7 @@ INSERT INTO `data_types` (`id`, `name`, `slug`, `display_name_singular`, `displa
 (8, 'participants', 'participants', 'Participant', 'Participants', 'voyager-people', 'App\\Participant', '\\App\\Policies\\ParticipantPolicy', NULL, NULL, 1, 0, '{\"order_column\":\"identifier\",\"order_display_column\":\"identifier\",\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-06-16 12:45:15', '2020-07-20 01:07:20'),
 (15, 'blog_posts', 'blog_posts', 'Blog Post', 'Blog Posts', 'voyager-news', 'Pvtl\\VoyagerFrontend\\BlogPost', NULL, '\\Pvtl\\VoyagerFrontend\\Http\\Controllers\\PostController', '', 1, 0, NULL, '2020-06-16 20:06:43', '2020-06-16 20:06:45'),
 (16, 'categories', 'categories', 'Category', 'Categories', 'voyager-categories', 'Pvtl\\VoyagerBlog\\Category', NULL, '\\TCG\\Voyager\\Http\\Controllers\\VoyagerBaseController', '', 1, 0, NULL, '2020-06-16 20:06:43', '2020-06-16 20:06:43'),
-(17, 'pages', 'pages', 'Page', 'Pages', 'voyager-file-text', 'Pvtl\\VoyagerFrontend\\Page', NULL, '\\Pvtl\\VoyagerFrontend\\Http\\Controllers\\PageController', '', 1, 0, NULL, '2020-06-16 20:06:45', '2020-06-16 20:06:45'),
+(17, 'pages', 'pages', 'Page', 'Pages', 'voyager-file-text', 'Pvtl\\VoyagerFrontend\\Page', NULL, '\\Pvtl\\VoyagerFrontend\\Http\\Controllers\\PageController', NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"desc\",\"default_search_key\":null,\"scope\":null}', '2020-06-16 20:06:45', '2020-08-09 03:30:47'),
 (22, 'cohorts', 'cohorts', 'Cohort', 'Cohorts', 'voyager-people', 'App\\Cohort', '\\App\\Policies\\CohortPolicy', '\\App\\Http\\Controllers\\CohortController', NULL, 1, 0, '{\"order_column\":\"name\",\"order_display_column\":\"name\",\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-07-09 07:00:02', '2020-07-18 22:46:09'),
 (25, 'experiments', 'experiments', 'Experiment', 'Experiments', NULL, 'App\\Experiment', '\\App\\Policies\\ExperimentPolicy', '\\App\\Http\\Controllers\\ExperimentsController', 'Experiments are run from projects and have links for participants.', 1, 0, '{\"order_column\":\"id\",\"order_display_column\":\"name\",\"order_direction\":\"desc\",\"default_search_key\":null,\"scope\":null}', '2020-07-29 14:32:19', '2020-08-05 22:33:35'),
 (26, 'links', 'links', 'Link', 'Links', NULL, 'App\\Link', '\\App\\Policies\\LinkPolicy', NULL, NULL, 1, 0, '{\"order_column\":\"id\",\"order_display_column\":\"id\",\"order_direction\":\"desc\",\"default_search_key\":null,\"scope\":null}', '2020-08-01 10:49:14', '2020-08-06 01:56:55'),
@@ -581,7 +581,8 @@ CREATE TABLE `experiments` (
 --
 
 INSERT INTO `experiments` (`id`, `experiment_token`, `name`, `note`, `project_id`, `project_name`, `project_pi_id`, `cct_id`, `cct_version`, `cct_language`, `cct_name`, `cct_asset_path`, `cohort_id`, `cohort_name`, `active`, `created_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'e10d1132d978b7e10163c3312b9a5f16', 'EN Mono W2 : 202085-183454', NULL, 4, 'EN Mono W2', 2, 1, '1', 'English', 'English V1', 'storage/cct/english/v1', 2, 'English Monolinguals', 1, 2, NULL, NULL, NULL);
+(1, 'e10d1132d978b7e10163c3312b9a5f16', 'EN Mono W2 : 202085-183454', NULL, 4, 'EN Mono W2', 2, 1, '1', 'English', 'English V1', 'storage/cct/english/v1', 2, 'English Monolinguals', 1, 2, NULL, NULL, NULL),
+(2, 'b84a8dd0c7712a530f917192baf905f0', 'PR-1 : 202086-16533', NULL, 2, 'PR-1', 2, 2, '1', 'Spanish', 'Spanish 1.2', 'storage/cct/spanish/v1', 4, 'Spanish Monolinguals', 1, 2, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -624,7 +625,11 @@ CREATE TABLE `links` (
 
 INSERT INTO `links` (`id`, `experiment_id`, `participant_id`, `participant_identifier`, `participant_alias`, `token`, `link`, `active`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 1, 1, '800', 'sdsu_en_w1_800', '0e7e40064acb32444ee8fd8b9404b1f3', '/cct?token=0e7e40064acb32444ee8fd8b9404b1f3', 1, NULL, NULL, NULL),
-(2, 1, 2, '801', 'sdsu_en_w1_801', '4725c7eda8e5aa7a048f73e6c862de69', '/cct?token=4725c7eda8e5aa7a048f73e6c862de69', 1, NULL, NULL, NULL);
+(2, 1, 2, '801', 'sdsu_en_w1_801', '4725c7eda8e5aa7a048f73e6c862de69', '/cct?token=4725c7eda8e5aa7a048f73e6c862de69', 1, NULL, NULL, NULL),
+(3, 2, 3, '900', 'sdsu_sp_w1_900', '44d6981c9e2ee12dfd8795a56e09d4be', '/cct?token=44d6981c9e2ee12dfd8795a56e09d4be', 1, NULL, NULL, NULL),
+(4, 2, 4, '901', 'sdsu_sp_w1_901', 'b0e429890f0d2c6b131d1fb35438571e', '/cct?token=b0e429890f0d2c6b131d1fb35438571e', 1, NULL, NULL, NULL),
+(5, 2, 5, '902', 'sdsu_sp_w1_902', '37c99d44ca11a561b755452ef862d18d', '/cct?token=37c99d44ca11a561b755452ef862d18d', 1, NULL, NULL, NULL),
+(6, 2, 6, '904', 'sdsu_sp_w1_904', '25ca4535b0ac8423dda088fca5dd7541', '/cct?token=25ca4535b0ac8423dda088fca5dd7541', 1, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -675,24 +680,24 @@ CREATE TABLE `menu_items` (
 --
 
 INSERT INTO `menu_items` (`id`, `menu_id`, `title`, `url`, `target`, `icon_class`, `color`, `parent_id`, `order`, `created_at`, `updated_at`, `route`, `parameters`) VALUES
-(1, 1, 'Dashboard', '', '_self', 'voyager-boat', NULL, NULL, 1, '2020-06-12 05:10:26', '2020-06-12 05:10:26', 'voyager.dashboard', NULL),
-(2, 1, 'Media', '', '_self', 'voyager-images', NULL, NULL, 9, '2020-06-12 05:10:26', '2020-08-05 09:08:14', 'voyager.media.index', NULL),
-(3, 1, 'Users', '', '_self', 'voyager-group', '#000000', 5, 1, '2020-06-12 05:10:26', '2020-08-05 09:13:41', 'voyager.users.index', 'null'),
-(4, 1, 'Roles', '', '_self', 'voyager-lock', NULL, 5, 2, '2020-06-12 05:10:26', '2020-08-05 09:13:41', 'voyager.roles.index', NULL),
-(5, 1, 'Tools', '', '_self', 'voyager-tools', NULL, NULL, 11, '2020-06-12 05:10:26', '2020-08-05 09:14:05', NULL, NULL),
-(6, 1, 'Menu Builder', '', '_self', 'voyager-list', NULL, 5, 5, '2020-06-12 05:10:26', '2020-08-05 09:14:05', 'voyager.menus.index', NULL),
-(7, 1, 'Database', '', '_self', 'voyager-data', NULL, 5, 3, '2020-06-12 05:10:26', '2020-08-05 09:14:05', 'voyager.database.index', NULL),
-(8, 1, 'Compass', '', '_self', 'voyager-compass', NULL, 5, 6, '2020-06-12 05:10:26', '2020-08-05 09:14:05', 'voyager.compass.index', NULL),
-(9, 1, 'BREAD', '', '_self', 'voyager-bread', NULL, 5, 4, '2020-06-12 05:10:26', '2020-08-05 09:14:05', 'voyager.bread.index', NULL),
-(10, 1, 'Settings', '', '_self', 'voyager-settings', NULL, 5, 8, '2020-06-12 05:10:26', '2020-08-05 09:14:05', 'voyager.settings.index', NULL),
-(11, 1, 'Hooks', '', '_self', 'voyager-hook', NULL, 5, 7, '2020-06-12 05:10:26', '2020-08-05 09:14:05', 'voyager.hooks', NULL),
+(1, 1, 'Dashboard', '', '_self', 'voyager-dashboard', '#000000', NULL, 1, '2020-06-12 05:10:26', '2020-08-10 01:09:45', 'voyager.dashboard', 'null'),
+(2, 1, 'Media', '', '_self', 'voyager-images', NULL, NULL, 9, '2020-06-12 05:10:26', '2020-08-07 02:36:36', 'voyager.media.index', NULL),
+(3, 1, 'Users', '', '_self', 'voyager-group', '#000000', NULL, 11, '2020-06-12 05:10:26', '2020-08-09 03:32:10', 'voyager.users.index', 'null'),
+(4, 1, 'Roles', '', '_self', 'voyager-lock', NULL, 5, 1, '2020-06-12 05:10:26', '2020-08-09 03:32:07', 'voyager.roles.index', NULL),
+(5, 1, 'Admin Tools', '', '_self', 'voyager-tools', '#000000', NULL, 13, '2020-06-12 05:10:26', '2020-08-09 03:32:28', NULL, ''),
+(6, 1, 'Menu Builder', '', '_self', 'voyager-list', NULL, 5, 4, '2020-06-12 05:10:26', '2020-08-09 03:32:10', 'voyager.menus.index', NULL),
+(7, 1, 'Database', '', '_self', 'voyager-data', NULL, 5, 2, '2020-06-12 05:10:26', '2020-08-09 03:32:10', 'voyager.database.index', NULL),
+(8, 1, 'Compass', '', '_self', 'voyager-compass', NULL, 5, 5, '2020-06-12 05:10:26', '2020-08-09 03:32:10', 'voyager.compass.index', NULL),
+(9, 1, 'BREAD', '', '_self', 'voyager-bread', NULL, 5, 3, '2020-06-12 05:10:26', '2020-08-09 03:32:10', 'voyager.bread.index', NULL),
+(10, 1, 'Settings', '', '_self', 'voyager-settings', NULL, 5, 7, '2020-06-12 05:10:26', '2020-08-09 03:32:10', 'voyager.settings.index', NULL),
+(11, 1, 'Hooks', '', '_self', 'voyager-hook', NULL, 5, 6, '2020-06-12 05:10:26', '2020-08-09 03:32:10', 'voyager.hooks', NULL),
 (13, 1, 'Projects', '', '_self', 'voyager-archive', '#000000', NULL, 2, '2020-06-16 12:42:49', '2020-07-09 12:11:00', 'voyager.projects.index', 'null'),
-(14, 1, 'CCT', '', '_self', 'voyager-puzzle', '#000000', NULL, 8, '2020-06-16 12:44:27', '2020-08-05 09:08:14', 'voyager.ccts.index', 'null'),
+(14, 1, 'CCT', '', '_self', 'voyager-puzzle', '#000000', NULL, 8, '2020-06-16 12:44:27', '2020-08-07 02:36:36', 'voyager.ccts.index', 'null'),
 (15, 1, 'Participants', '', '_self', 'voyager-person', '#000000', NULL, 4, '2020-06-16 12:45:15', '2020-07-09 13:12:44', 'voyager.participants.index', 'null'),
-(18, 1, 'Blog', '', '_self', 'voyager-news', NULL, 5, 10, '2020-06-16 20:06:43', '2020-08-05 09:14:05', NULL, NULL),
+(18, 1, 'Blog', '', '_self', 'voyager-news', NULL, 5, 8, '2020-06-16 20:06:43', '2020-08-09 03:32:10', NULL, NULL),
 (19, 1, 'Posts', '', '_self', 'voyager-news', NULL, 18, 1, '2020-06-16 20:06:43', '2020-06-16 20:06:43', 'voyager.blog_posts.index', NULL),
 (20, 1, 'Categories', '', '_self', 'voyager-categories', NULL, 18, 2, '2020-06-16 20:06:43', '2020-06-16 20:06:43', 'voyager.categories.index', NULL),
-(21, 1, 'Pages', '', '_self', 'voyager-file-text', NULL, 5, 9, '2020-06-16 20:06:45', '2020-08-05 09:14:05', 'voyager.pages.index', NULL),
+(21, 1, 'Pages', '', '_self', 'voyager-file-text', NULL, NULL, 10, '2020-06-16 20:06:45', '2020-08-09 03:31:28', 'voyager.pages.index', NULL),
 (22, 2, 'Home', '/home', '_self', '', NULL, NULL, 1, '2020-06-16 20:06:45', '2020-06-16 20:06:45', NULL, NULL),
 (23, 2, 'About', '/about', '_self', '', NULL, NULL, 2, '2020-06-16 20:06:45', '2020-06-16 20:06:45', NULL, NULL),
 (24, 2, 'Contact', '/contact', '_self', '', NULL, NULL, 3, '2020-06-16 20:06:45', '2020-06-16 20:06:45', NULL, NULL),
@@ -704,8 +709,8 @@ INSERT INTO `menu_items` (`id`, `menu_id`, `title`, `url`, `target`, `icon_class
 (34, 1, 'Cohorts', '', '_self', 'voyager-people', '#000000', NULL, 3, '2020-07-09 07:00:02', '2020-07-09 12:20:04', 'voyager.cohorts.index', 'null'),
 (36, 1, 'Experiments', '', '_self', 'voyager-lab', '#000000', NULL, 5, '2020-07-29 14:32:19', '2020-07-29 23:55:04', 'voyager.experiments.index', 'null'),
 (37, 1, 'Links', '', '_self', 'voyager-rocket', '#000000', NULL, 6, '2020-08-01 10:49:14', '2020-08-05 09:10:00', 'voyager.links.index', 'null'),
-(38, 1, 'Data Collection', '', '_self', 'voyager-data', '#000000', NULL, 7, '2020-08-03 02:59:59', '2020-08-05 09:38:25', 'voyager.cct-collection-data.index', 'null'),
-(39, 1, 'Documentation', 'https://cctapp.readthedocs.io/en/latest/', '_blank', 'voyager-book', '#000000', NULL, 10, '2020-08-05 09:12:22', '2020-08-05 09:14:05', NULL, '');
+(39, 1, 'Documentation', 'https://cctapp.readthedocs.io/en/latest/', '_blank', 'voyager-book', '#000000', NULL, 12, '2020-08-05 09:12:22', '2020-08-09 03:32:10', NULL, ''),
+(41, 1, 'Data', '/admin/data', '_self', 'voyager-data', '#000000', NULL, 7, '2020-08-07 02:35:39', '2020-08-07 02:37:29', NULL, '');
 
 -- --------------------------------------------------------
 
@@ -780,9 +785,9 @@ CREATE TABLE `pages` (
 --
 
 INSERT INTO `pages` (`id`, `author_id`, `title`, `excerpt`, `body`, `image`, `slug`, `meta_description`, `status`, `created_at`, `updated_at`, `layout`) VALUES
-(1, 1, 'Home', 'From the pages table.', '<p>&nbsp;</p>\r\n<h3 class=\"text-center\">This home page has text pulled from the pages table.</h3>\r\n<p class=\"text-center\">This is the body of the lorem ipsum page</p>\r\n<p>&nbsp;</p>', 'pages/July2020/pihC3B9LOmaYccS0aldB.png', 'home', 'This is the meta description', 'ACTIVE', '2020-06-16 20:06:45', '2020-07-23 06:40:43', 'default'),
-(2, 1, 'About', 'This is the excerpt for the Lorem Ipsum Page', '<p>&nbsp;</p>\r\n<h3 class=\"text-center\">This is the body of the lorem ipsum page</h3>\r\n<p class=\"text-center\">This is the body of the lorem ipsum page</p>\r\n<p>&nbsp;</p>', 'pages/July2020/Cllf6ujHasoWbY14E7Ol.jpg', 'about', 'This is the meta description for about', 'ACTIVE', '2020-06-16 20:06:45', '2020-07-28 00:42:36', 'default'),
-(3, 1, 'Contact', 'This is the excerpt for the Lorem Ipsum Page', '<p>&nbsp;</p>\r\n<h3 class=\"text-center\">This is the body of the lorem ipsum page</h3>\r\n<p class=\"text-center\">This is the body of the lorem ipsum page</p>\r\n<p>&nbsp;</p>', 'pages/July2020/uhTkoaqlQu7Cx12s3JuO.jpg', 'contact', 'This is the meta description for contact', 'ACTIVE', '2020-06-16 20:06:45', '2020-07-28 00:43:20', 'default');
+(1, 1, 'Home', 'From the pages table.', '<p>&nbsp;</p>\r\n<h3 class=\"text-center\" style=\"text-align: left;\">CCT App Website</h3>\r\n<p>This website supports the managment and delivery of the Computerized Comprehension Task (CCT) program.</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>', 'pages/July2020/pihC3B9LOmaYccS0aldB.png', 'home', 'Computerized Comprehension Task (CCT)', 'ACTIVE', '2020-06-16 20:06:45', '2020-08-09 01:18:50', 'default'),
+(2, 1, 'About', 'This is the excerpt for the Lorem Ipsum Page', '<h3 class=\"text-center\">About the CCT App Website</h3>\r\n<p style=\"font-size: 14px; font-weight: normal;\">This website supports the managment and delivery of the Computerized Comprehension Task (CCT) program.</p>\r\n<p style=\"font-size: 14px; font-weight: normal;\">The program is used in conjunction with a touch screen display to allow the subject to select on screen objects in the trials by touching the objects on screen directly.</p>', NULL, 'about', 'This is the meta description for about', 'ACTIVE', '2020-06-16 20:06:45', '2020-08-09 01:37:29', 'default'),
+(3, 1, 'Contact', 'This is the excerpt for the Lorem Ipsum Page', '<h3 class=\"text-center\" style=\"text-align: left;\">Email Us</h3>\r\n<p class=\"text-center\" style=\"text-align: left;\">paul@inkbear.com</p>\r\n<p>&nbsp;</p>', 'pages/July2020/uhTkoaqlQu7Cx12s3JuO.jpg', 'contact', 'email', 'ACTIVE', '2020-06-16 20:06:45', '2020-08-09 01:38:49', 'default');
 
 -- --------------------------------------------------------
 
@@ -1063,8 +1068,11 @@ INSERT INTO `permission_role` (`permission_id`, `role_id`) VALUES
 (70, 1),
 (71, 1),
 (72, 1),
+(72, 5),
 (73, 1),
+(73, 5),
 (74, 1),
+(74, 5),
 (75, 1),
 (76, 1),
 (97, 1),
@@ -1225,7 +1233,7 @@ CREATE TABLE `roles` (
 INSERT INTO `roles` (`id`, `name`, `display_name`, `created_at`, `updated_at`, `rank`) VALUES
 (1, 'admin', 'Administrator', '2020-06-12 05:10:26', '2020-06-21 00:55:48', 0),
 (2, 'pi', 'Primary Investigator', '2020-06-12 05:10:26', '2020-06-21 00:56:56', 20),
-(4, 'staff', 'Staff', '2020-06-14 07:37:11', '2020-07-30 03:17:38', 30),
+(4, 'default', 'Default', '2020-06-14 07:37:11', '2020-08-06 22:24:27', 30),
 (5, 'owner', 'CCT Owner', '2020-06-15 04:53:18', '2020-06-21 00:56:28', 10);
 
 -- --------------------------------------------------------
@@ -1323,7 +1331,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `avatar`, `email_verified_at`, `password`, `remember_token`, `settings`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Administrator', 'admin@inkbear.com', 'users/June2020/6ULs03y7YwbYbRhqkkAy.png', NULL, '$2y$10$kcJNKuv9CnSS4AkRYtT9Vejl9mss/TW4pUYpfUfTvWGp6A2obUTJG', 'lCNSGrdMd20tVRFKv1SsTf3i4v1lFJQzrgwqS0UEhNRy8nGgXqBt1meDkSeF', '{\"locale\":\"en\"}', '2020-06-12 05:13:26', '2020-07-06 00:58:33'),
+(1, 1, 'Administrator', 'admin@inkbear.com', 'users/June2020/6ULs03y7YwbYbRhqkkAy.png', NULL, '$2y$10$kcJNKuv9CnSS4AkRYtT9Vejl9mss/TW4pUYpfUfTvWGp6A2obUTJG', 'N0nmvYQhzervMYUl96BJwv2jps5NM0J0vgxEHIadeveUNdGZDmv7PwR9uhwY', '{\"locale\":\"en\"}', '2020-06-12 05:13:26', '2020-07-06 00:58:33'),
 (2, 2, 'Primary Investigator 1', 'pi1@inkbear.com', 'users/June2020/DFb72rqSePNc96CDbw22.png', NULL, '$2y$10$6/cxqNbilJw4FUvHLOpPm.aaE7rJ9kbF52Dlg3Vl7.7.lGpO2qr0u', NULL, '{\"locale\":\"en\"}', '2020-06-14 07:53:28', '2020-06-14 07:53:28'),
 (3, 2, 'Primary Investigator 2', 'pi2@inkbear.com', 'users/June2020/mHMsIBBqhLQR4Hm06aK3.png', NULL, '$2y$10$4DLgC1IECOxS1dJzUWNgDepBI1w3WYFBQvBaetP6GXVSKRBMqKzOW', NULL, '{\"locale\":\"en\"}', '2020-06-14 07:54:36', '2020-06-15 04:55:19'),
 (4, 4, 'Collaborator 1', 'collab1@inkbear.com', 'users/June2020/vWVDyjyDspgmCeY0ZXYd.png', NULL, '$2y$10$lBBrn2YU6zGur41QRL0zM..RIxVJOKLLlQQb8oTXS97yZ4k.BFrIO', NULL, '{\"locale\":\"en\"}', '2020-06-14 07:55:58', '2020-07-05 08:35:48'),
@@ -1334,8 +1342,7 @@ INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `avatar`, `email_verified
 (9, 4, 'Staff 3', 'staff3@inkbear.com', 'users/June2020/yBQVAATN2jUF7bV8gGD1.png', NULL, '$2y$10$nwTpjN7JugcIevUd1UrFTO9jIECqERpnY2gg2orfCCGJgRgwA4NwO', NULL, '{\"locale\":\"en\"}', '2020-06-14 12:44:37', '2020-06-14 12:44:37'),
 (10, 4, 'Staff 4', 'staff4@inkbear.com', 'users/June2020/U0BJ0JLjxylHdPoYAgoq.png', NULL, '$2y$10$5ab/lEg5L2jFYLYrYA3UmOmdkF41ApRxLoj3seYs8gLTJcHYdU2cK', NULL, '{\"locale\":\"en\"}', '2020-06-14 12:45:32', '2020-06-14 12:45:32'),
 (11, 5, 'CCT Owner', 'owner@inkbear.com', 'users/June2020/wp4CdCjACaRTiuCKDFxu.png', NULL, '$2y$10$3XhRQ5qKyeZDl/YtJrHWPegzOsEK2FD2VScrxOvFckjUH7Vqeu4/K', NULL, '{\"locale\":\"en\"}', '2020-06-15 04:54:15', '2020-06-15 04:57:20'),
-(12, 4, 'guest one', 'guest1@inkbear.com', 'users/default.png', NULL, '$2y$10$9M5kFMvY53J4/eDGbyiFtur3oLl/VWS98.U5vIKGy01rvT620Vlje', NULL, '{\"locale\":\"en\"}', '2020-06-19 06:28:06', '2020-07-05 15:09:21'),
-(13, NULL, 'guest two', 'guest2@inkbear.com', 'users/default.png', NULL, '$2y$10$/uKAqI1uZ.GKCHe7gB5nwuz3RCOwZCYFjOGoSrLI2zzrdzkIMa8D6', NULL, '{\"locale\":\"en\"}', '2020-07-05 15:08:35', '2020-07-20 04:49:09');
+(12, 4, 'guest one', 'guest1@inkbear.com', 'users/default.png', NULL, '$2y$10$9M5kFMvY53J4/eDGbyiFtur3oLl/VWS98.U5vIKGy01rvT620Vlje', NULL, '{\"locale\":\"en\"}', '2020-06-19 06:28:06', '2020-07-05 15:09:21');
 
 -- --------------------------------------------------------
 
@@ -1643,7 +1650,7 @@ ALTER TABLE `data_types`
 -- AUTO_INCREMENT for table `experiments`
 --
 ALTER TABLE `experiments`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1655,7 +1662,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `links`
 --
 ALTER TABLE `links`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `menus`
@@ -1667,7 +1674,7 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `menu_items`
 --
 ALTER TABLE `menu_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -1739,7 +1746,7 @@ ALTER TABLE `trials`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Constraints for dumped tables

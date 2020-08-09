@@ -9,7 +9,9 @@ The Admin is responsible for all activities outside the usage of the system.
 1. Ensuring system security
 1. Ensuring system functionality
 
-For techical reference refer to these base resources:
+## References
+
+For technical reference refer to these base resources:
 
 [XAMPP Web Server](https://www.apachefriends.org/download.html) runs an OS agnostic 
 Apache web server with PHP and MySQL included.
@@ -20,3 +22,8 @@ style framework.
 [Voyager Admin](https://voyager.devdojo.com) security for Laravel. 
 
 [JSpych](http://jspsych.org) JavaScript library for creating experiments. 
+
+## Notes
+
+The admin dashboard will not show data on the cards as the information is not relevant to the 
+admin role. The dashboard will be updated later to show system information.

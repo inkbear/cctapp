@@ -195,6 +195,12 @@ Policy files allow adding rules for access at the BREAD level. Sample:
             } 
         }
 
+## Dashboard
+
+The dashboard is created via route >> controller >> view. The voyager route handles "/" and directs to app/Http/Controllers/DashboardController.php. The controller does all the SQL Calls and rendering of grids which are returned to the view. The progress bar is created with a combination of CSS in the makeGrid function and the CSS section of the view "voyager::index" which has an override file in the app section.
+
+The cards are all managed in the CSS on the view file.
+
 ## Debugging
 
 Tailing the log file and setting Log::info() is very useful.
