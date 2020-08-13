@@ -5,7 +5,7 @@
     <script src="jspsych/jspsych.js"></script>
     <script src="jspsych/plugins/jspsych-html-keyboard-response.js"></script>
     <script src="jspsych/plugins/jspsych-audio-button-response.js"></script>
-    <script src="{{ $experiment_data->cct_asset_path }}/trial_info.js"></script>
+    <script src="storage/{{ $experiment_data->cct_asset_path }}/trial_info.js"></script>
     <link href="jspsych/css/jspsych.css" rel="stylesheet" type="text/css"></link>
   </head>
   <body></body>
@@ -132,22 +132,22 @@
     
     /* add meta data related to the entire experiment */
     jsPsych.data.addProperties({
-        token: '{{ $experiment_data->token }}',
-        project_id: '{{ $experiment_data->project_id }}', 
-        project_name: '{{ $experiment_data->project_name }}', 
-        project_pi_id: '{{ $experiment_data->project_pi_id }}', 
-        experiment_id: '{{ $experiment_data->experiment_id }}',
-        experiment_name: '{{ $experiment_data->experiment_name }}',
-        note: '{{ $experiment_data->note }}',
+        token: '{{ $experiment_data->token ?? '' }}',
+        project_id: '{{ $experiment_data->project_id ?? '' }}', 
+        project_name: '{{ $experiment_data->project_name ?? '' }}', 
+        project_pi_id: '{{ $experiment_data->project_pi_id ?? '' }}', 
+        experiment_id: '{{ $experiment_data->experiment_id ?? '' }}',
+        experiment_name: '{{ $experiment_data->experiment_name ?? '' }}',
+        note: '{{ $experiment_data->note ?? '' }}',
         cct_id: '{{ $experiment_data->cct_id }}',
         cct_version: '{{ $experiment_data->cct_version }}',
         cct_language: '{{ $experiment_data->cct_language }}',
         cct_name: '{{ $experiment_data->cct_name }}',
-        cohort_id: '{{ $experiment_data->cohort_id }}',
-        cohort_name: '{{ $experiment_data->cohort_name }}',
-        participant_id: '{{ $experiment_data->participant_id }}', 
-        participant_identifier: '{{ $experiment_data->participant_identifier }}', 
-        participant_alias: '{{ $experiment_data->participant_alias }}', 
+        cohort_id: '{{ $experiment_data->cohort_id ?? '' }}',
+        cohort_name: '{{ $experiment_data->cohort_name ?? '' }}',
+        participant_id: '{{ $experiment_data->participant_id ?? '' }}', 
+        participant_identifier: '{{ $experiment_data->participant_identifier ?? '' }}', 
+        participant_alias: '{{ $experiment_data->participant_alias ?? '' }}', 
         test_type: '{{ $experiment_data->test_type }}', 
     });
 
@@ -178,10 +178,10 @@
         use_webaudio: false,
         // show the raw json data - to be removed for live
         on_finish: function() {
-            if( '{{ $experiment_data->test_type }}' != 'preview'){
+            if( '{{ $experiment_data->test_type }}' != 'preview' && '{{ $experiment_data->test_type }}' != 'ownerpreview') {
                 saveData(); 
             }
-            if( '{{ $experiment_data->test_type }}' != 'live'){
+            if( '{{ $experiment_data->test_type }}' != 'live' && '{{ $experiment_data->test_type }}' != 'test'){
                 jsPsych.data.displayData();
             }
         }

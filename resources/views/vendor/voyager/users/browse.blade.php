@@ -110,8 +110,7 @@
                                         @if ( (Auth::user()->hasRole('admin') && $data->role_id == 1) || $data->role_id != 1 )
                                         <tr>
                                             @if($showCheckboxColumn)
-                                                <td>
-                                                
+                                                <td>            
                                                     <input type="checkbox" name="row_id" id="checkbox_{{ $data->getKey() }}" value="{{ $data->getKey() }}">
                                                 </td>
                                             @endif

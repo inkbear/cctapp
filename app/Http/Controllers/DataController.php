@@ -47,7 +47,7 @@ class DataController
         return Voyager::view( $view, compact('dataContent') );
     }
 
-    public function show(Request $request, $id, $test_type)
+    public function show(Request $request, $id, $test_type = 'all')
     {
         $this->experiment_access($id);
 
@@ -58,8 +58,10 @@ class DataController
         // Check to see if we are showing both live and test data
         if($test_type == 'test'){
             $dataContent = $dataContent->where('d.test_type', '=', 'test' ); 
+        }elseif($test_type == 'live'){
+            $dataContent = $dataContent->where('d.test_type', '=', 'live' ); 
         }else{
-            $dataContent = $dataContent->where('d.test_type', '!=', 'test' ); 
+            // no filtering
         }
         $dataContent = $dataContent->get();
         $view = 'experiment_data';

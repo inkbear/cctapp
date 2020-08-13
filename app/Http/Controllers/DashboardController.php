@@ -36,14 +36,14 @@ class DashboardController
         $sql = "
             SELECT DISTINCT p.name AS 'Project Name', ccts.name AS 'CCT Name', ch.name AS 'Cohort Name', e.name AS 'Experiment Name'  
             FROM projects AS p
-            LEFT JOIN cct_project AS cp ON p.id = cp.project_id
-            JOIN ccts ON cp.cct_id = ccts.id
+            LEFT JOIN cct_user AS cu ON p.pi_id = cu.user_id
+            LEFT JOIN ccts ON cu.cct_id = ccts.id
             LEFT JOIN cohort_project as chp ON p.id = chp.project_id
-            JOIN cohorts AS ch ON ch.id = chp.cohort_id
+            LEFT JOIN cohorts AS ch ON ch.id = chp.cohort_id
             LEFT JOIN experiments AS e ON p.id = e.project_id
-            JOIN users AS u ON u.id = p.pi_id
-            JOIN project_user AS pu ON p.id = pu.project_id
-            JOIN project_collaborator AS pc ON p.id = pc.project_id
+            LEFT JOIN users AS u ON u.id = p.pi_id
+            LEFT JOIN project_user AS pu ON p.id = pu.project_id
+            LEFT JOIN project_collaborator AS pc ON p.id = pc.project_id
             WHERE p.pi_id = " .  $user_id . "
             OR pu.user_id = " . $user_id . "
             OR pc.user_id = " . $user_id . "
@@ -104,7 +104,7 @@ class DashboardController
             GROUP BY c.name, p.name
             ORDER BY c.name ASC, p.name ASC
         ";
-        Log::info($sql);
+        // Log::info($sql);
         $data = DB::select( DB::raw($sql));
         
         if(count($data)>0){
@@ -119,12 +119,11 @@ class DashboardController
         $sql = "
             SELECT DISTINCT c.name AS 'CCT Name'
             FROM ccts AS c 
-            JOIN cct_project AS cp ON cp.cct_id = c.id
-            JOIN projects AS p ON p.id = cp.project_id
-            WHERE p.pi_id = " .  $user_id . "
+            JOIN cct_user AS cu ON cu.cct_id = c.id
+            WHERE cu.user_id = " .  $user_id . "
             ORDER BY c.name 
         ";
-        Log::info($sql);
+        // Log::info($sql);
         $data = DB::select( DB::raw($sql));
         
         if(count($data)>0){

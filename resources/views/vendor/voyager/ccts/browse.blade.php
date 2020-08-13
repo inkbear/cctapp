@@ -106,27 +106,6 @@
                                 </thead>
                                 <tbody>
                                     @foreach($dataTypeContent as $data)
-
-                                    @if(property_exists($row->details, 'relationship'))
-
-                                        @foreach($data->{$row->field} as $item)
-                                            {{ $item->{$row->field} }}
-                                        @endforeach
-
-                                        @elseif(property_exists($row->details, 'options'))
-                                        @if (!empty(json_decode($data->{$row->field})))
-                                            @foreach(json_decode($data->{$row->field}) as $item)
-                                                @if (@$row->details->options->{$item})
-                                                <!-- OUTPUT -->
-                                                    {{ $row->details->options->{$item} . (!$loop->last ? ', ' : '') }}
-                                                @endif
-                                            @endforeach
-                                        @else
-                                            {{ __('voyager::generic.none') }}
-                                        @endif
-                                    @endif
-
-                                    @can('rowAccess', $data)
                                     <tr>
                                         @if($showCheckboxColumn)
                                             <td>
@@ -138,7 +117,6 @@
                                             if ($data->{$row->field.'_browse'}) {
                                                 $data->{$row->field} = $data->{$row->field.'_browse'};
                                             }
-                                            
                                             @endphp
                                             <td>
                                                 @if (isset($row->details->view))
@@ -272,23 +250,19 @@
                                                 @endif
                                             </td>
                                         @endforeach
-                                                   
                                         <td class="no-sort no-click bread-actions">
-                                            <!-- Add in the Generate Experiment button -->
-                                            @if($data->cct_id != '' && $data->cohort_id != '')
-                                                <a href="/admin/linkbuilder?project_id={{ $data->id }}" title="Generate" class="btn btn-sm btn-success pull-right edit">
-                                                    <i class="voyager-lab"></i> <span class="hidden-xs hidden-sm">Make Links</span>
-                                                </a>
-                                            @endif
+                                        
                                             @foreach($actions as $action)
                                                 @if (!method_exists($action, 'massAction'))
                                                     @include('voyager::bread.partials.actions', ['action' => $action])
                                                 @endif
                                             @endforeach
+                                            @php $root_url = "http://" . $_SERVER['SERVER_NAME']; @endphp
+                                            <a href="{{ $root_url }}/cct?token={{ $data->id }}&env=ownerpreview" title="Preview" class="btn btn-sm btn-success pull-right edit" target=”_blank” style="margin-right: 5px;">
+                                            <i class="voyager-check"></i> <span class="hidden-xs hidden-sm">Preview</span>
+                                            </a>
                                         </td>
                                     </tr>
-                                    @endcan
-
                                     @endforeach
                                 </tbody>
                             </table>
