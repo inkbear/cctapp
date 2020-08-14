@@ -11,6 +11,8 @@ The Admin is responsible for all activities outside the usage of the system.
 
 ## References
 
+<a href="https://www.youtube.com/playlist?list=PLHgsp_iAq6kWDBBrn8JA9NdXcza70PXMI" target="_blank">YouTube playlist</a> of end user how to videos.
+
 For technical reference refer to these base resources:
 
 [XAMPP Web Server](https://www.apachefriends.org/download.html) runs an OS agnostic 
@@ -22,6 +24,7 @@ style framework.
 [Voyager Admin](https://voyager.devdojo.com) security for Laravel. 
 
 [JSpych](http://jspsych.org) JavaScript library for creating experiments. 
+
 
 ## Notes
 

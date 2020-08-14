@@ -10,6 +10,17 @@ The Primary Investigator is responsible for:
 1. Adding participants
 1. Running experiments
 
+## Registering for an Account
+
+If an account is not created already you can register a new account and get a role assignment later.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/SAWC3Wvj0Ws" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+## How to Video
+This video shows how to create a project, add team members, create cohorts, add participants, and run experiments. It is recommended for all team members.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/UXbA6cvZPAM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Creating Projects
 
 Projects are managed in the project admin. Only some basic information is required 
