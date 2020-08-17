@@ -9,5 +9,7 @@ nav:
       - Collaborator: guide_collaborator.md
       - Staff: guide_staff.md
     - Running Experiments: experiments.md
-    - Developer Notes: developer_notes.md
+    - Administration:
+      - Developer Notes: developer_notes.md
+      - Installation Guide: installation_aws.md
 theme: readthedocs

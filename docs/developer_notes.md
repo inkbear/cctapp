@@ -1,6 +1,6 @@
 # Developer Notes
 
-## Web Server and Database Installation
+## Web Server and Database Installation for localhost (Mac OS)
 
 * Install XAMPP (without VM!)
 * Change doc root to /Users/paulcoogan/Documents/www/cctapp/public
@@ -208,3 +208,4 @@ Tailing the log file and setting Log::info() is very useful.
         tail -f storage/logs/laravel.log
 
 For DB queries, run \DB::enableQueryLog() before you run the query and then use dd(\DB::getQueryLog()) after to see what was actually run.
+
