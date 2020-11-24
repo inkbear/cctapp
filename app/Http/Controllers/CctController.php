@@ -54,7 +54,7 @@ class CctController extends Controller
     private function getExperimentData($token)
     {       
         $experiment_data = DB::table('experiments', 'e')
-            ->select('e.*', 'links.*', 'e.name AS experiment_name', 'links.active AS l_active', 'e.active AS e_active',)
+            ->select('e.*', 'links.*', 'e.name AS experiment_name', 'links.active AS l_active', 'e.active AS e_active')
             ->join('links', 'e.id', '=', 'links.experiment_id' )
             ->where('links.token', '=', $token )
             ->first();
