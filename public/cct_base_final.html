@@ -5,40 +5,57 @@
     <script src="jspsych/jspsych.js"></script>
     <script src="jspsych/plugins/jspsych-html-keyboard-response.js"></script>
     <script src="jspsych/plugins/jspsych-audio-button-response.js"></script>
-    <script src="storage/cct/english/v1/trial_info.js"></script>
+    <script src="storage/cct/english/v2/trial_info.js"></script>
     <link href="jspsych/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+    <link href="css/cct.css" rel="stylesheet" type="text/css"></link>
   </head>
   <body></body>
   <script>
+   
 
     /* create timeline */
     var timeline = [];   
 
     /* timeline variables are loaded from trial_info.js */
     
-    // create the array for preloading audio
-    var all_audio = [];
-    for (var i=0; i<trial_info.length; i++) {
-        all_audio.push(trial_info[i].prompt_audio);
-        all_audio.push(trial_info[i].feedback_audio);
+    // create arrays for preloading audio
+    var train_audio = [];
+    for (var i=0; i<train_info.length; i++) {
+        train_audio.push(train_info[i].prompt_audio);
+        train_audio.push(train_info[i].feedback_audio);
     }
 
-    // create the array for preloading images
-    var all_images = [];
-    for (var i=0; i<trial_info.length; i++) {
-        all_images.push(trial_info[i].target_image);
-        all_images.push(trial_info[i].distractor_image);
+    var train_images = [];
+    for (var i=0; i<train_info.length; i++) {
+        train_images.push(train_info[i].target_image);
+        train_images.push(train_info[i].distractor_image);
     }
 
-    /* welcome message trial  */
-    var welcome = {
+    var test_audio = [];
+    for (var i=0; i<test_info.length; i++) {
+        test_audio.push(test_info[i].prompt_audio);
+        test_audio.push(test_info[i].feedback_audio);
+    }
+
+    var test_images = [];
+    for (var i=0; i<test_info.length; i++) {
+        test_images.push(test_info[i].target_image);
+        test_images.push(test_info[i].distractor_image);
+    }
+    
+    // create a single array for all the images and a single array for all the audio
+    var all_audio = train_audio.concat(test_audio);
+    var all_images = train_images.concat(test_images);
+
+    /* welcome message and start train  */
+    var start_train = {
         type: "html-keyboard-response",
-        stimulus: "Welcome to the CCT App. Press any key to begin. ",
+        stimulus: "Welcome to the CCT App. Press any key to start the training phase. ",
         data: {
-            trial_part: 'welcome',
+            trial_part: 'start_train',
         }
     };
-    timeline.push(welcome);
+    timeline.push(start_train);
 
     /*  feedback trial plays audio feedback based on if_node trial */
     var feedback = {
@@ -112,13 +129,52 @@
         trial_duration: 1000,
     };
 
-    /* trial wrapper contains main_trial, the conditional for loading feedback audion, and a post trial blanking interval */
-    var trial_wrapper = {
-        timeline_variables: trial_info,
+    /* trial wrapper contains main_trial, the conditional for loading feedback audio, and a post trial blanking interval */
+    /* Make the first wrapper for the training sequence */
+    var train_wrapper = {
+        timeline_variables: train_info,
         timeline: [main_trial, if_node, blank_interval],
         repetitions: 1
     }
-    timeline.push(trial_wrapper);
+    timeline.push(train_wrapper);
+
+    /* next phase message trial  */
+    var start_test = {
+        type: "html-keyboard-response",
+        stimulus: "Training phase complete. Press any key to start test phase. ",
+        data: {
+            trial_part: 'start_test',
+        }
+    };
+    timeline.push(start_test);
+
+    /* Make a second trail for the test sequence */
+    var test_wrapper = {
+        timeline_variables: test_info,
+        timeline: [main_trial, if_node, blank_interval],
+        repetitions: 1
+    }
+    timeline.push(test_wrapper);
+
+    /* next phase message trial  */
+    var start_reliablity = {
+        type: "html-keyboard-response",
+        stimulus: "Test phase complete. Press any key to start reliablity phase. ",
+        data: {
+            trial_part: 'start_reliablity',
+        }
+    };
+    timeline.push(start_reliablity);
+
+    /* Make a third wrapper for the reliablity sequence */
+    var reliablity_info = test_info.slice(0);;
+    reliablity_info.reverse();
+    var reliablity_wrapper = {
+        timeline_variables: reliablity_info,
+        timeline: [main_trial, if_node, blank_interval],
+        repetitions: 1
+    }
+    timeline.push(reliablity_wrapper);
 
     /* exit message trial  */
     var exit = {
@@ -145,7 +201,6 @@
         timeline: timeline,
         preload_audio: all_audio,
         preload_images: all_images,
-        // show_preload_progress_bar: true,
         
         show_progress_bar: false,
         randomize_order: false,
