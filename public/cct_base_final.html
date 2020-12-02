@@ -9,7 +9,9 @@
     <link href="jspsych/css/jspsych.css" rel="stylesheet" type="text/css"></link>
     <link href="css/cct.css" rel="stylesheet" type="text/css"></link>
   </head>
-  <body></body>
+  <body>
+    <div id="jspsych-target"></div>
+  </body>
   <script>
    
 
@@ -91,7 +93,7 @@
         margin_horizontal: "40px",
         /* end section */
 
-        trial_duration: 7000, // move on after 7 seconds
+        trial_duration: 70000, // move on after 7 seconds
         data: {
             trial_part: 'test',
             target: jsPsych.timelineVariable('target'),
@@ -201,7 +203,7 @@
         timeline: timeline,
         preload_audio: all_audio,
         preload_images: all_images,
-        
+        display_element: 'jspsych-target',
         show_progress_bar: false,
         randomize_order: false,
         use_webaudio: false,
