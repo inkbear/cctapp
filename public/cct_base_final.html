@@ -9,18 +9,16 @@
     <link href="jspsych/css/jspsych.css" rel="stylesheet" type="text/css"></link>
     <link href="css/cct.css" rel="stylesheet" type="text/css"></link>
   </head>
-  <body>
-    <div id="jspsych-target"></div>
-  </body>
-  <script>
-   
+  <body></body>
+  <script> 
 
     /* create timeline */
     var timeline = [];   
-
+    var button_html = '<img src="%choice%" height="250px"/>'; 
+    var margin_horizontal = "80px";
     /* timeline variables are loaded from trial_info.js */
     
-    // create arrays for preloading audio
+    // create arrays for preloading audio and images
     var train_audio = [];
     for (var i=0; i<train_info.length; i++) {
         train_audio.push(train_info[i].prompt_audio);
@@ -29,8 +27,9 @@
 
     var train_images = [];
     for (var i=0; i<train_info.length; i++) {
-        train_images.push(train_info[i].target_image);
-        train_images.push(train_info[i].distractor_image);
+        train_images.push(train_info[i].left_image);
+        train_images.push(test_info[i].center_image);       
+        train_images.push(train_info[i].right_image);
     }
 
     var test_audio = [];
@@ -41,11 +40,12 @@
 
     var test_images = [];
     for (var i=0; i<test_info.length; i++) {
-        test_images.push(test_info[i].target_image);
-        test_images.push(test_info[i].distractor_image);
+        test_images.push(test_info[i].left_image);
+        test_images.push(test_info[i].center_image);        
+        test_images.push(test_info[i].right_image);
     }
     
-    // create a single array for all the images and a single array for all the audio
+    // create a single array for all the images and a single array for all the audio for preloading
     var all_audio = train_audio.concat(test_audio);
     var all_images = train_images.concat(test_images);
 
@@ -59,40 +59,12 @@
     };
     timeline.push(start_train);
 
-    /*  feedback trial plays audio feedback based on if_node trial */
-    var feedback = {
-        type: 'audio-button-response',
-        stimulus: jsPsych.timelineVariable('feedback_audio'),   
-
-        /* section: be sure this section matches the main_trial settings so the images stay put */
-        choices: ['', ''], // button labels need to exist but are not displayed or stored
-        button_html: [
-            jsPsych.timelineVariable('target_image_button'),
-            jsPsych.timelineVariable('distractor_image_button')
-        ],
-        margin_horizontal: "40px",
-        /* end section */
-
-        trial_ends_after_audio: true,
-        data: {
-            trial_part: 'feedback',
-        },
-    }
-
     /* main_trial loads two images as buttons and plays the audio prompt */
     var main_trial = {
         type: 'audio-button-response',
         stimulus: jsPsych.timelineVariable('prompt_audio'),
-                
-        /* section: be sure this section matches the main_trial settings so the images stay put */
-        choices: ['', ''], // button labels need to exist but are not displayed or stored
-        button_html: [
-            jsPsych.timelineVariable('target_image_button'),
-            jsPsych.timelineVariable('distractor_image_button')
-        ],
-        margin_horizontal: "40px",
-        /* end section */
-
+        button_html: button_html,   
+        margin_horizontal: margin_horizontal,
         trial_duration: 70000, // move on after 7 seconds
         data: {
             trial_part: 'test',
@@ -100,11 +72,31 @@
             distractor: jsPsych.timelineVariable('distractor'),
         },
         on_finish: function(data){
-            if(data.button_pressed == 0){
+            // translate the friendly parameter to the index number
+            if(jsPsych.timelineVariable('correct_choice', true) == 'left'){
+                var correct_choice = 0; 
+            } else {
+                var correct_choice = 2
+            }
+            // check if correct
+            if(data.button_pressed == correct_choice){
                 data.correct = true; 
             } else {
                 data.correct = false;
             }
+        },
+        
+    }
+
+    /*  feedback trial plays audio feedback based on if_node trial */
+    var feedback = {
+        type: 'audio-button-response',
+        stimulus: jsPsych.timelineVariable('feedback_audio'),   
+        button_html: button_html,   
+        margin_horizontal: margin_horizontal,
+        trial_ends_after_audio: true,
+        data: {
+            trial_part: 'feedback',
         },
     }
 
@@ -134,9 +126,10 @@
     /* trial wrapper contains main_trial, the conditional for loading feedback audio, and a post trial blanking interval */
     /* Make the first wrapper for the training sequence */
     var train_wrapper = {
-        timeline_variables: train_info,
+        timeline_variables: train_info,     
         timeline: [main_trial, if_node, blank_interval],
-        repetitions: 1
+        choices: [jsPsych.timelineVariable('left_image'), jsPsych.timelineVariable('center_image'), jsPsych.timelineVariable('right_image')],
+        repetitions: 1,
     }
     timeline.push(train_wrapper);
 
@@ -154,6 +147,7 @@
     var test_wrapper = {
         timeline_variables: test_info,
         timeline: [main_trial, if_node, blank_interval],
+        choices: [jsPsych.timelineVariable('left_image'), jsPsych.timelineVariable('center_image'), jsPsych.timelineVariable('right_image')],
         repetitions: 1
     }
     timeline.push(test_wrapper);
@@ -168,12 +162,11 @@
     };
     timeline.push(start_reliablity);
 
-    /* Make a third wrapper for the reliablity sequence */
-    var reliablity_info = test_info.slice(0);;
-    reliablity_info.reverse();
+    /* Make a third wrapper for the reliablity sequence reversed left/right */
     var reliablity_wrapper = {
-        timeline_variables: reliablity_info,
+        timeline_variables: test_info,
         timeline: [main_trial, if_node, blank_interval],
+        choices: [jsPsych.timelineVariable('right_image'), jsPsych.timelineVariable('center_image'), jsPsych.timelineVariable('left_image')],
         repetitions: 1
     }
     timeline.push(reliablity_wrapper);
@@ -181,7 +174,7 @@
     /* exit message trial  */
     var exit = {
         type: "html-keyboard-response",
-        stimulus: "Please exit through the gift shop. Press any key to continue. ",
+        stimulus: "Press any key to exit through the gift shop.",
         data: {
             trial_part: 'exit',
         }
@@ -192,7 +185,7 @@
     jsPsych.data.addProperties({
         // live will use tokens here
         subject: 1, 
-        version: 'cct_en_v1'
+        version: 'cct_en_v2'
     });
     
     /* log the start time/date for the experiment */
@@ -203,7 +196,7 @@
         timeline: timeline,
         preload_audio: all_audio,
         preload_images: all_images,
-        display_element: 'jspsych-target',
+        //display_element: 'jspsych-target',
         show_progress_bar: false,
         randomize_order: false,
         use_webaudio: false,
