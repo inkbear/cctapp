@@ -7,15 +7,29 @@
     <script src="jspsych/plugins/jspsych-audio-button-response.js"></script>
     <script src="storage/cct/english/v2/trial_info.js"></script>
     <link href="jspsych/css/jspsych.css" rel="stylesheet" type="text/css"></link>
-    <link href="css/cct.css" rel="stylesheet" type="text/css"></link>
+    <!-- <link href="css/cct.css" rel="stylesheet" type="text/css"></link> -->
+    <style>
+        body {
+            background-color: #7488de;
+            background-image: url("storage/cct/english/v2/png/grandma.png");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 140px; 
+        }
+        .text_prompt {
+            color: #ffffff;
+            position: relative;
+            top: 150px;
+        }
+    </style>
   </head>
-  <body></body>
+  <body> </body>
   <script> 
 
     /* create timeline */
     var timeline = [];   
     var button_html = '<img src="%choice%" height="250px"/>'; 
-    var margin_horizontal = "80px";
+    var margin_horizontal = "150px";
     /* timeline variables are loaded from trial_info.js */
     
     // create arrays for preloading audio and images
@@ -27,8 +41,7 @@
 
     var train_images = [];
     for (var i=0; i<train_info.length; i++) {
-        train_images.push(train_info[i].left_image);
-        train_images.push(test_info[i].center_image);       
+        train_images.push(train_info[i].left_image);      
         train_images.push(train_info[i].right_image);
     }
 
@@ -40,8 +53,7 @@
 
     var test_images = [];
     for (var i=0; i<test_info.length; i++) {
-        test_images.push(test_info[i].left_image);
-        test_images.push(test_info[i].center_image);        
+        test_images.push(test_info[i].left_image);     
         test_images.push(test_info[i].right_image);
     }
     
@@ -52,7 +64,7 @@
     /* welcome message and start train  */
     var start_train = {
         type: "html-keyboard-response",
-        stimulus: "Welcome to the CCT App. Press any key to start the training phase. ",
+        stimulus: "<div class=\"text_prompt\">Welcome to the CCT App. Press any key to start the training phase.</div>",
         data: {
             trial_part: 'start_train',
         }
@@ -67,16 +79,24 @@
         margin_horizontal: margin_horizontal,
         trial_duration: 70000, // move on after 7 seconds
         data: {
-            trial_part: 'test',
             target: jsPsych.timelineVariable('target'),
             distractor: jsPsych.timelineVariable('distractor'),
         },
         on_finish: function(data){
-            // translate the friendly parameter to the index number
+            // console.log(jsPsych.currentTrial().trial_part);
+            // translate the friendly parameter to the index number and reverse for reliabilty phase
             if(jsPsych.timelineVariable('correct_choice', true) == 'left'){
-                var correct_choice = 0; 
+                if(jsPsych.currentTrial().trial_part == 'reliability'){
+                    var correct_choice = 1;
+                } else {
+                    var correct_choice = 0; 
+                }
             } else {
-                var correct_choice = 2
+                if(jsPsych.currentTrial().trial_part == 'reliability'){
+                    var correct_choice = 0;
+                } else {
+                    var correct_choice = 1; 
+                }
             }
             // check if correct
             if(data.button_pressed == correct_choice){
@@ -84,8 +104,7 @@
             } else {
                 data.correct = false;
             }
-        },
-        
+        },        
     }
 
     /*  feedback trial plays audio feedback based on if_node trial */
@@ -128,18 +147,21 @@
     var train_wrapper = {
         timeline_variables: train_info,     
         timeline: [main_trial, if_node, blank_interval],
-        choices: [jsPsych.timelineVariable('left_image'), jsPsych.timelineVariable('center_image'), jsPsych.timelineVariable('right_image')],
+        choices: [jsPsych.timelineVariable('left_image'), jsPsych.timelineVariable('right_image')],
         repetitions: 1,
+        data: {
+            trial_part: 'train',
+        },
     }
     timeline.push(train_wrapper);
 
     /* next phase message trial  */
     var start_test = {
         type: "html-keyboard-response",
-        stimulus: "Training phase complete. Press any key to start test phase. ",
+        stimulus: "<div class=\"text_prompt\">Training phase complete. Press any key to start test phase.</div>",
         data: {
             trial_part: 'start_test',
-        }
+        },
     };
     timeline.push(start_test);
 
@@ -147,18 +169,21 @@
     var test_wrapper = {
         timeline_variables: test_info,
         timeline: [main_trial, if_node, blank_interval],
-        choices: [jsPsych.timelineVariable('left_image'), jsPsych.timelineVariable('center_image'), jsPsych.timelineVariable('right_image')],
-        repetitions: 1
+        choices: [jsPsych.timelineVariable('left_image'), jsPsych.timelineVariable('right_image')],
+        repetitions: 1,
+        data: {
+            trial_part: 'test',
+        },
     }
     timeline.push(test_wrapper);
 
     /* next phase message trial  */
     var start_reliablity = {
         type: "html-keyboard-response",
-        stimulus: "Test phase complete. Press any key to start reliablity phase. ",
+        stimulus: "<div class=\"text_prompt\">Test phase complete. Press any key to start reliablity phase.</div>",
         data: {
             trial_part: 'start_reliablity',
-        }
+        },
     };
     timeline.push(start_reliablity);
 
@@ -166,18 +191,21 @@
     var reliablity_wrapper = {
         timeline_variables: test_info,
         timeline: [main_trial, if_node, blank_interval],
-        choices: [jsPsych.timelineVariable('right_image'), jsPsych.timelineVariable('center_image'), jsPsych.timelineVariable('left_image')],
-        repetitions: 1
+        choices: [jsPsych.timelineVariable('right_image'), jsPsych.timelineVariable('left_image')],
+        repetitions: 1,
+        data: {
+            trial_part: 'reliability',
+        },
     }
     timeline.push(reliablity_wrapper);
 
     /* exit message trial  */
     var exit = {
         type: "html-keyboard-response",
-        stimulus: "Press any key to exit through the gift shop.",
+        stimulus: "<div class=\"text_prompt\">All trials are complete. Press any key to view data locally.</div>",
         data: {
             trial_part: 'exit',
-        }
+        },
     };
     timeline.push(exit);
     
