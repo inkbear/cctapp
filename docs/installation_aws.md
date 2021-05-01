@@ -4,7 +4,7 @@ Once it is all working on local host the application can be put onto AWS EC2
 
 ## AWS Platform Configuration
 
-Build the ec2 instances and install LAMP stack as per Amazon instructions
+Build the ec2 instances and install LAMP stack as per Amazon instructions. Use the LAMP Stack template if available.
 
 Make sure PHP is version 7+ and has the right modules.
 
