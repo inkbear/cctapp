@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CCT App</title>
+    <script src="jspsych/jspsych.js"></script>
+    <script src="jspsych/plugins/jspsych-html-keyboard-response.js"></script>
+    <script src="jspsych/plugins/jspsych-audio-button-response.js"></script>
+    <script src="jspsych/plugins/jspsych-html-button-response.js"></script>
+    <script src="storage/cct/english/v2/trial_info_form_a.js"></script>
+    <link href="jspsych/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+    <style>
+        body {
+            background-color: #7488de;
+            background-image: url("storage/cct/english/v2/png/1x1.png");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 250px; 
+        }
+        .text_prompt {
+            color: #ffffff;
+            position: relative;
+            top: -250px;
+        }
+        .text_prompt_character_selection {
+            color: #ffffff;
+        }
+    </style>
+  </head>
+  <body> </body>
+  <script> 
+    
+    /* Animation functions */
+    function set_c_blank() {
+        document.body.style.backgroundImage = "url('storage/cct/english/v2/png/1x1.png')";
+    }
+
+    function set_c_down(charachter) {
+        document.body.style.backgroundImage = "url('storage/cct/english/v2/png/teacher_" + charachter + "_arms_down.png')";
+    }
+
+    function set_c_animated(charachter) {
+        document.body.style.backgroundImage = "url('storage/cct/english/v2/gif/teacher_" + charachter + "_animated.gif?a=" + Math.random() + "')";
+    }
+
+    function set_c_gesture(charachter) {
+        document.body.style.backgroundImage = "url('storage/cct/english/v2/png/teacher_" + charachter + "_arms_gesture.png')";
+    }
+
+    function set_c_up(charachter) {
+        document.body.style.backgroundImage = "url('storage/cct/english/v2/png/teacher_" + charachter + "_arms_up.png')";
+    }
+    
+    /* create timeline */
+    var timeline = [];   
+    var button_html = '<img src="%choice%" height="250px"/>'; 
+    var margin_horizontal = "150px";
+    /* timeline variables are loaded from trial_info.js */
+    
+    // create arrays for preloading audio and images
+    var character_choices = [];
+    var animation_images = [];
+    var c_variations = ['caucasian', 'hispanic', 'asian', 'black'];
+    for (var i=0; i<c_variations.length; i++) {
+        character_choices.push("storage/cct/english/v2/png/teacher_" + c_variations[i] + "_arms_down.png");      
+        animation_images.push("storage/cct/english/v2/png/teacher_" + c_variations[i] + "_arms_down.png");
+        animation_images.push("storage/cct/english/v2/gif/teacher_" + c_variations[i] + "_animated.gif");
+        animation_images.push("storage/cct/english/v2/png/teacher_" + c_variations[i] + "_arms_gesture.png");
+        animation_images.push("storage/cct/english/v2/png/teacher_" + c_variations[i] + "_arms_up.png");
+    }
+
+    var train_audio = [];
+    for (var i=0; i<train_info.length; i++) {
+        train_audio.push(train_info[i].prompt_audio);
+        train_audio.push(train_info[i].feedback_audio);
+    }
+
+    var train_images = [];
+    for (var i=0; i<train_info.length; i++) {
+        train_images.push(train_info[i].left_image);      
+        train_images.push(train_info[i].right_image);
+    }
+
+    var test_audio = [];
+    for (var i=0; i<test_info.length; i++) {
+        test_audio.push(test_info[i].prompt_audio);
+        test_audio.push(test_info[i].feedback_audio);
+    }
+
+    var test_images = [];
+    for (var i=0; i<test_info.length; i++) {
+        test_images.push(test_info[i].left_image);     
+        test_images.push(test_info[i].right_image);
+    }
+ 
+    var rel_audio = [];
+    for (var i=0; i<rel_info.length; i++) {
+        rel_audio.push(rel_info[i].prompt_audio);
+        rel_audio.push(rel_info[i].feedback_audio);
+    }
+
+    var rel_images = [];
+    for (var i=0; i<rel_info.length; i++) {
+        rel_images.push(rel_info[i].left_image);     
+        rel_images.push(rel_info[i].right_image);
+    }
+
+    // create a single array for all the images and a single array for all the audio for preloading
+    var all_audio = train_audio.concat(test_audio.concat(rel_audio));
+    var all_images = animation_images.concat(train_images.concat(test_images.concat(rel_images)));
+
+    /* Welcome and select character  */
+    var select_character = {
+        type: "html-button-response",
+        stimulus: "<div class=\"text_prompt_character_selection\">Select your guide for form A</div>",
+        choices: character_choices,
+        button_html: '<img src="%choice%" height="350px"/>',
+        data: {
+            trial_part: 'select_character',    
+        },
+        
+        on_start: set_c_blank,
+        on_finish: function(){
+            var char_num = jsPsych.data.get().last(1).values()[0].button_pressed;
+            if(char_num == 0){
+                var charachter = 'caucasian';
+            }else if(char_num == 1){
+                var charachter = 'hispanic';
+            }else if(char_num == 2){
+                var charachter = 'asian';
+            }else if(char_num == 3){
+                var charachter = 'black';          
+            }else{
+                // Default safety selection
+                var charachter = 'hispanic';
+            }
+            // Add the charachter variable to all trials for reference by future trials
+            jsPsych.data.addProperties({charachter: charachter});           
+        },     
+    };
+    timeline.push(select_character);
+
+    /* prompt to start train  */
+    var start_train = {
+        type: "html-keyboard-response",
+        stimulus: "<div class=\"text_prompt\">Press any key to start the training phase.</div>",
+        on_start: function(){
+            set_c_down(jsPsych.data.get().select('charachter').values[0]);
+        },
+        data: {
+            trial_part: 'start_train',          
+        },
+    };
+    timeline.push(start_train);
+
+    /* main_trial loads two images, plays the audio prompt, loads the animation, and locks out response */
+    var audio_prompt = {
+        type: 'audio-button-response',
+        stimulus: jsPsych.timelineVariable('prompt_audio'),
+        data: {
+            trial_part: 'audio_prompt',
+        },
+        button_html: button_html,   
+        margin_horizontal: margin_horizontal,
+        trial_ends_after_audio: true, 
+        response_ends_trial: false,
+        
+        // Change the character to gesturing
+        on_start: function(){
+            set_c_gesture(jsPsych.data.get().select('charachter').values[0]);
+        },   
+    }
+    
+    /* main_trial loads two images as buttons, accepts response, and refreshed the animation */
+    var main_trial = {
+        type: 'html-button-response',
+        stimulus: '',
+        button_html: button_html,   
+        margin_horizontal: margin_horizontal,
+        trial_duration: 7000, // move on after 7 seconds
+       
+        // Change the character to the gesture animation
+        on_start: function(){
+            set_c_animated(jsPsych.data.get().select('charachter').values[0]);
+        },
+        data: {
+            target: jsPsych.timelineVariable('target'),
+            distractor: jsPsych.timelineVariable('distractor'),
+        },
+        on_finish: function(data){
+            // console.log(jsPsych.currentTrial().trial_part);
+            // translate the friendly parameter to the index number
+            if(jsPsych.timelineVariable('correct_choice', true) == 'left'){
+                var correct_choice = 0; 
+            } else {
+                var correct_choice = 1; 
+            }
+            // check if correct
+            if(data.button_pressed == correct_choice){
+                data.correct = true; 
+            } else {
+                data.correct = false;
+            }
+        },        
+    }
+
+    /*  feedback trial plays audio feedback based on if_node trial */
+    var feedback = {
+        type: 'audio-button-response',
+        stimulus: jsPsych.timelineVariable('feedback_audio'),   
+        button_html: button_html,   
+        margin_horizontal: margin_horizontal,
+        trial_ends_after_audio: true,
+        on_start: function(){
+            set_c_up(jsPsych.data.get().select('charachter').values[0]);
+        },
+        data: {
+            trial_part: 'feedback',
+        },
+    }
+
+    /* decison trial for routing to audio feedback trial if the correct response was given in the previous trial (main_trial) */
+    var if_node = {
+        timeline: [feedback],
+        conditional_function: function(){
+            var correct = jsPsych.data.get().last(1).values()[0].correct;
+            if(correct){
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+    
+    /* blank_interval, since feedback may not occur at the end of the main_trial */
+    var blank_interval = {
+        type: "html-keyboard-response",
+        stimulus: '',
+        on_start: function(){
+            set_c_down(jsPsych.data.get().select('charachter').values[0]);
+        },
+        data: {
+            trial_part: 'blank_interval',
+        },
+        trial_duration: 1000,
+    };
+
+    /* trial wrapper contains audio_prompt, main_trial, the conditional for loading feedback audio, and a post trial blanking interval */
+    var train_wrapper = {
+        timeline_variables: train_info,     
+        timeline: [audio_prompt, main_trial, if_node, blank_interval],
+        choices: [jsPsych.timelineVariable('left_image'), jsPsych.timelineVariable('right_image')],
+        repetitions: 1,
+        data: {
+            trial_part: 'train',
+        },
+    }
+    timeline.push(train_wrapper);
+
+    /* next phase message trial  */
+    var start_test = {
+        type: "html-keyboard-response",
+        stimulus: "<div class=\"text_prompt\">Training phase complete. Press any key to start test phase.</div>",
+        on_start: function(){
+            set_c_down(jsPsych.data.get().select('charachter').values[0]);
+        },
+        data: {
+            trial_part: 'start_test',
+        },
+    };
+    timeline.push(start_test);
+
+    /* Make a second trial for the test sequence */
+    var test_wrapper = {
+        timeline_variables: test_info,
+        timeline: [audio_prompt, main_trial, if_node, blank_interval],
+        choices: [jsPsych.timelineVariable('left_image'), jsPsych.timelineVariable('right_image')],
+        repetitions: 1,
+        data: {
+            trial_part: 'test',
+        },
+    }
+    timeline.push(test_wrapper);
+
+    /* next phase message trial  */
+    var start_reliablity = {
+        type: "html-keyboard-response",
+        stimulus: "<div class=\"text_prompt\">Test phase complete. Press any key to start reliablity phase.</div>",
+        on_start: function(){
+            set_c_down(jsPsych.data.get().select('charachter').values[0]);
+        },
+        data: {
+            trial_part: 'start_reliablity',
+        },
+    };
+    timeline.push(start_reliablity);
+
+    /* Make a third wrapper for the reliablity sequence */
+    var reliablity_wrapper = {
+        timeline_variables: rel_info,
+        timeline: [audio_prompt, main_trial, if_node, blank_interval],
+        choices: [jsPsych.timelineVariable('left_image'), jsPsych.timelineVariable('right_image')],
+        repetitions: 1,
+        data: {
+            trial_part: 'reliability',
+        },
+    }
+    timeline.push(reliablity_wrapper);
+
+    /* exit message trial  */
+    var exit = {
+        type: "html-keyboard-response",
+        stimulus: "<div class=\"text_prompt\">All trials are complete. This is test mode so press any key to view data locally.</div>",
+        data: {
+            trial_part: 'exit',
+        },
+        on_start: set_c_blank,
+    };
+    timeline.push(exit);
+    
+    /* add meta data related to the entire experiment */
+    jsPsych.data.addProperties({
+        // live will use tokens here
+        subject: 1, 
+        version: 'cct_en_v2'
+    });
+    
+    /* log the start time/date for the experiment */
+    var start_time = jsPsych.startTime();
+
+    /* start the experiment */
+    jsPsych.init({
+        timeline: timeline,
+        preload_audio: all_audio,
+        preload_images: all_images,
+        //display_element: 'jspsych-target',
+        show_progress_bar: false,
+        randomize_order: false,
+        use_webaudio: false,
+        // show the raw json data - to be removed for live
+        on_finish: function(){
+            jsPsych.data.displayData();
+        }
+    });
+
+  </script>
+</html>
